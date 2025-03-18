@@ -7,12 +7,12 @@ public class Gameboard {
 	ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
 	
+
+
 	int height = 22;
 	int width = 10;
 
 	public Gameboard() {
-		
-		
 		
 		for (int i = 0; i < height; i++ ) {
 			grid.add(new ArrayList<GridBlock>());
@@ -47,5 +47,14 @@ public class Gameboard {
 			
 		}
 	}
+	
+	public ArrayList<ArrayList<GridBlock>> getGrid() {
+		return grid;
+	}
+
+	public ArrayList<Tetromino> getTetrominos() {
+		return Tetrominos;
+	}
+	
 	
 }
