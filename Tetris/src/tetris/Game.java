@@ -4,11 +4,12 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.util.Random;
 
-public class Game{
+public class Game  implements Runnable{
 
 	private Gameboard gameboard;
 	private Player player;
 	private Random random;
+	private Tetromino activeTetromino;
 	
 	public Game() {
         this.gameboard = new Gameboard();
@@ -30,4 +31,18 @@ public class Game{
         });
     }
 
+    
+	@Override
+	public void run() {
+		while(activeTetromino.isMoving) {
+			activeTetromino.checkBelow();
+			activeTetromino.moveDown();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+		
+	}
 }

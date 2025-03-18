@@ -7,8 +7,6 @@ public class Gameboard {
 	ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
 	
-
-
 	int height = 22;
 	int width = 10;
 

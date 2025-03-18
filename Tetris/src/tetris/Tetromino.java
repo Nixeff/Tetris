@@ -2,7 +2,7 @@ package tetris;
 
 import java.util.ArrayList;
 
-public class Tetromino implements Runnable {
+public class Tetromino  {
 
 	ArrayList<Block> bodyPieces;
 	boolean isMoving = true;
@@ -33,19 +33,7 @@ public class Tetromino implements Runnable {
 		this.isMoving = isMoving;
 	}
 
-	@Override
-	public void run() {
-		while(isMoving) {
-			checkBelow();
-			moveDown();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		
-	}
+
 	
 	
 }

@@ -25,6 +25,9 @@ public class Block {
 
 
 
+	/**
+	 * @param gridX
+	 */
 	public void setGridX(int gridX) {
 		this.gridX = gridX;
 	}
@@ -37,6 +40,9 @@ public class Block {
 
 
 
+	/**
+	 * @param gridY		this is the y cordinate in the grid system
+	 */
 	public void setGridY(int gridY) {
 		this.gridY = gridY;
 	}
@@ -64,7 +70,7 @@ public class Block {
 	}
 	
 	public void moveDown() {
-		gridY += 10;
+		y += 10;
 	}
 	
 	
