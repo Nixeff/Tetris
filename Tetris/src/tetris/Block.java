@@ -1,10 +1,48 @@
 package tetris;
 
+import java.util.ArrayList;
+
 public class Block {
 
+	int gridX;
+	int gridY;
+	
 	int x;
 	int y;
+	Gameboard gameBoard;
+	Tetromino tetromino;
 	
+	public Block(Gameboard gameBoard, Tetromino tetromino) {
+		this.gameBoard = gameBoard;
+		this.tetromino = tetromino;
+	}
+	
+	
+	
+	public int getGridX() {
+		return gridX;
+	}
+
+
+
+	public void setGridX(int gridX) {
+		this.gridX = gridX;
+	}
+
+
+
+	public int getGridY() {
+		return gridY;
+	}
+
+
+
+	public void setGridY(int gridY) {
+		this.gridY = gridY;
+	}
+
+
+
 	public int getX() {
 		return x;
 	}
@@ -19,7 +57,37 @@ public class Block {
 	}
 	
 	public void removeSelf() {
-		
+		tetromino.getBodyPieces().remove(this);
+		if(tetromino.getBodyPieces().size() == 0) {
+			gameBoard.getTetrominos().remove(tetromino);
+		}
+	}
+	
+	public void moveDown() {
+		gridY += 10;
+	}
+	
+	
+	/**
+	 * @param direction		Increments of 10. Positive right, Negative left
+	 */
+	public void moveSideways(int direction) {
+		gridX += direction;
+	}
+	
+	public void checkBelow() {
+		ArrayList<GridBlock> row = gameBoard.getGrid().get(y+1);
+		for(int i = 0; i < row.size(); i++) {
+			if(row.get(i).isBlocked()) {
+				tetromino.setMoving(false);
+			}
+		}
+	}
+	
+	public void checkIfAbove(int row) {
+		if(y > row) {
+			tetromino.setMoving(true);
+		}
 	}
 	
 }
