@@ -2,6 +2,8 @@ package tetris;
 
 import java.util.ArrayList;
 
+import tetris.Tetrominos.LShape;
+
 public abstract class Tetromino  {
 
 	protected ArrayList<Block> bodyPieces = new ArrayList<Block>();
@@ -31,7 +33,12 @@ public abstract class Tetromino  {
 		this.isMoving = isMoving;
 	}
 
-
+    public static Tetromino createTetromino(Gameboard gameboard, String type) {
+        return switch (type) {
+            case "L" -> new LShape(gameboard);
+            default -> throw new IllegalArgumentException("Unknown Tetromino type: " + type);
+        };
+    }
 	
 	
 }
