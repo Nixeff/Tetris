@@ -12,9 +12,13 @@ public class Block {
 	Gameboard gameBoard;
 	Tetromino tetromino;
 	
-	public Block(Gameboard gameBoard, Tetromino tetromino) {
+	public Block(Gameboard gameBoard, Tetromino tetromino, int x, int y) {
 		this.gameBoard = gameBoard;
 		this.tetromino = tetromino;
+		this.gridX = x;
+		this.gridY = y;
+		this.x = x*10;
+		this.y = y*10;
 	}
 	
 	

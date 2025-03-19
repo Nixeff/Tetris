@@ -2,12 +2,10 @@ package tetris;
 
 import java.util.ArrayList;
 
-public class Tetromino  {
+public abstract class Tetromino  {
 
-	ArrayList<Block> bodyPieces;
+	protected ArrayList<Block> bodyPieces = new ArrayList<Block>();
 	boolean isMoving = true;
-	
-	
 	
 	public void moveDown() {
 		for(int i = 0; i < bodyPieces.size(); i++) {
