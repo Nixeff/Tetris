@@ -1,33 +1,35 @@
 package tetris;
 
 import javax.swing.*;
-import java.awt.event.*;
+import java.awt.*;
 import java.util.Random;
 
 public class Game  implements Runnable{
 
-	private Gameboard gameboard;
-	private Player player;
+	private static Gameboard gameboard;
+	private static Player player;
 	private Random random;
 	private Tetromino activeTetromino;
 	
-	public Game() {
-        this.gameboard = new Gameboard(player);
-        this.player = new Player();
-        this.random = new Random();
-    }
-	
-    public void start() {
+	public static void start() {
         JFrame frame = new JFrame("Tetris");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
+
+        player = new Player();
+        gameboard = new Gameboard(player);
+
+        frame.add(gameboard, BorderLayout.CENTER);
+
+        frame.setBounds(100, 100, 300, 600);
         frame.setVisible(true);
     }
 	
 	
+	
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            Game game = new Game();
-            game.start();
+            start();
         });
     }
 
