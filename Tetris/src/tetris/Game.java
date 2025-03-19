@@ -37,6 +37,17 @@ public class Game  implements Runnable{
 		while(activeTetromino.isMoving) {
 			activeTetromino.checkBelow();
 			activeTetromino.moveDown();
+			
+			// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
+			for(int i = 0; i<24; i++) {
+				gameboard.isRowBlocked(i);
+			}
+			// Removes all the rows that are blocked highest up to lowest first
+			if(gameboard.getMarkedRowsForDeletion().size() > 0) {
+				for (int i = 0; i<gameboard.getMarkedRowsForDeletion().size(); i++) {
+					gameboard.deleteRow(gameboard.getMarkedRowsForDeletion().get(i));
+				}
+			}
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {

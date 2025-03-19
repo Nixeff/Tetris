@@ -6,6 +6,7 @@ public class Gameboard {
 	
 	ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
+	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // int cant be used and Integer is the same apperently? idk
 	
 	int height = 22;
 	int width = 10;
@@ -35,12 +36,12 @@ public class Gameboard {
 			}
 		}
 		if(isBlocked) {
-			deleteRow(row);
+			markedRowsForDeletion.add(row);
 		}
 	}
 	
 	// Needs fixing for multiple rows removed at once
-	private void deleteRow(int row) {
+	public void deleteRow(int row) {
 		for(int i = 0; i < Tetrominos.size(); i++) {
 			for(int o = 0; o < Tetrominos.get(i).getBodyPieces().size(); o++) {
 				if(Tetrominos.get(i).getBodyPieces().get(o).getY() == row) {
@@ -68,6 +69,12 @@ public class Gameboard {
 	public ArrayList<Tetromino> getTetrominos() {
 		return Tetrominos;
 	}
+
+	public ArrayList<Integer> getMarkedRowsForDeletion() {
+		return markedRowsForDeletion;
+	}
+	
+	
 	
 	
 }
