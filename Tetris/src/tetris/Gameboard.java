@@ -9,8 +9,12 @@ public class Gameboard {
 	
 	int height = 22;
 	int width = 10;
+	
+	private Player player;
 
-	public Gameboard() {
+	public Gameboard(Player player) {
+		
+		this.player = player;
 		
 		for (int i = 0; i < height; i++ ) {
 			grid.add(new ArrayList<GridBlock>());

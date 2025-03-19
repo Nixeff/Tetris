@@ -12,7 +12,7 @@ public class Game  implements Runnable{
 	private Tetromino activeTetromino;
 	
 	public Game() {
-        this.gameboard = new Gameboard();
+        this.gameboard = new Gameboard(player);
         this.player = new Player();
         this.random = new Random();
     }
