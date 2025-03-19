@@ -1,5 +1,10 @@
 package tetris;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
+import javax.swing.JPanel;
+
 public class GridBlock {
 	private int gridX;
 	private int gridY;
@@ -20,6 +25,8 @@ public class GridBlock {
 		this.x = gridX*width;
 		this.y = gridY*width;
 	}
+	
+
 	
 
 	
