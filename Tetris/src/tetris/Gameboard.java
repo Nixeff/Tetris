@@ -42,6 +42,14 @@ public class Gameboard extends JPanel{
 		}
 	}
 	
+	public void renderGameboard() {
+		for(Tetromino shape : Tetrominos) {
+			for(Block body : shape.getBodyPieces()) {
+				body.draw();
+			}
+		}
+	}
+	
 	// Needs fixing for multiple rows removed at once
 	public void deleteRow(int row) {
 		for(int i = 0; i < Tetrominos.size(); i++) {

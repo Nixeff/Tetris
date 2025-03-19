@@ -48,6 +48,9 @@ public class Game  implements Runnable{
 					gameboard.deleteRow(gameboard.getMarkedRowsForDeletion().get(i));
 				}
 			}
+			
+			gameboard.renderGameboard();
+			
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
