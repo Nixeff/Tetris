@@ -92,7 +92,8 @@ public class Block {
 	
 	public void checkIfAbove(int row) {
 		if(y > row) {
-			tetromino.setMoving(true);
+			gridY = gridY-y;
+			y = gridY*10;
 		}
 	}
 	
