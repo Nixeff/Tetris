@@ -44,8 +44,8 @@ public class Game  implements Runnable{
 			}
 			// Removes all the rows that are blocked highest up to lowest first
 			if(gameboard.getMarkedRowsForDeletion().size() > 0) {
-				for (int i = 0; i<gameboard.getMarkedRowsForDeletion().size(); i++) {
-					gameboard.deleteRow(gameboard.getMarkedRowsForDeletion().get(i));
+				for (int row : gameboard.getMarkedRowsForDeletion()) {
+					gameboard.deleteRow(row);
 				}
 			}
 			

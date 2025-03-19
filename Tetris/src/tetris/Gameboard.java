@@ -29,8 +29,8 @@ public class Gameboard extends JPanel{
 	
 	public void isRowBlocked(int row) {
 		boolean isBlocked = false;
-		for(int i = 0; i < width; i++) {
-			if(!grid.get(row).get(i).isBlocked()) {
+		for(GridBlock gridSquare : grid.get(row)) {
+			if(gridSquare.isBlocked()) {
 				isBlocked = false;
 				break;
 			} else {
@@ -50,24 +50,23 @@ public class Gameboard extends JPanel{
 		}
 	}
 	
-	// Needs fixing for multiple rows removed at once
 	public void deleteRow(int row) {
-		for(int i = 0; i < Tetrominos.size(); i++) {
-			for(int o = 0; o < Tetrominos.get(i).getBodyPieces().size(); o++) {
-				if(Tetrominos.get(i).getBodyPieces().get(o).getY() == row) {
-					Tetrominos.get(i).getBodyPieces().get(o).removeSelf();
+		for(Tetromino shape : Tetrominos) {
+			for(Block bodyPart : shape.getBodyPieces()) {
+				if(bodyPart.getY() == row) {
+					bodyPart.removeSelf();
 				}
 			}
 		}
-		for(int i = 0; i < Tetrominos.size(); i++) {
+		for(Tetromino shape : Tetrominos) {
 			boolean moveIt = true;
-			for(int o = 0; 0 < Tetrominos.get(i).getBodyPieces().size(); o++) {
-				if(!Tetrominos.get(i).getBodyPieces().get(o).checkIfAbove(row)) {
+			for(Block bodyPart : shape.getBodyPieces()) {
+				if(!bodyPart.checkIfAbove(row)) {
 					moveIt = false;
 				}
 			}
 			if(moveIt) {
-				Tetrominos.get(i).moveDown();
+				shape.moveDown();
 			}
 		}
 	}
