@@ -51,6 +51,12 @@ public class Game extends JPanel implements Runnable {
         }
     }
     
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            start();
+        });
+    }
+    
 	@Override
 	public void run() {
 		while(activeTetromino.isMoving) {
