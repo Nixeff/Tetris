@@ -2,13 +2,11 @@ package tetris;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Random;
 
 public class Game  implements Runnable{
 
 	private static Gameboard gameboard;
 	private static Player player;
-	private Random random;
 	private Tetromino activeTetromino;
 	
 	public static void start() {
