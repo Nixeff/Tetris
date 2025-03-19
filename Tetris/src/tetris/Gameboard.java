@@ -35,14 +35,25 @@ public class Gameboard {
 		}
 	}
 	
+	// Needs fixing for multiple rows removed at once
 	private void deleteRow(int row) {
 		for(int i = 0; i < Tetrominos.size(); i++) {
-			for(int o = 0; o < 4; o++) {
+			for(int o = 0; o < Tetrominos.get(i).getBodyPieces().size(); o++) {
 				if(Tetrominos.get(i).getBodyPieces().get(o).getY() == row) {
 					Tetrominos.get(i).getBodyPieces().get(o).removeSelf();
 				}
 			}
-			
+		}
+		for(int i = 0; i < Tetrominos.size(); i++) {
+			boolean moveIt = true;
+			for(int o = 0; 0 < Tetrominos.get(i).getBodyPieces().size(); o++) {
+				if(!Tetrominos.get(i).getBodyPieces().get(o).checkIfAbove(row)) {
+					moveIt = false;
+				}
+			}
+			if(moveIt) {
+				Tetrominos.get(i).moveDown();
+			}
 		}
 	}
 	

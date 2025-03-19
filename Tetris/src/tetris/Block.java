@@ -71,6 +71,7 @@ public class Block {
 	
 	public void moveDown() {
 		y += 10;
+		gridY += 1;
 	}
 	
 	
@@ -90,10 +91,11 @@ public class Block {
 		}
 	}
 	
-	public void checkIfAbove(int row) {
-		if(y > row) {
-			gridY = gridY-y;
-			y = gridY*10;
+	public boolean checkIfAbove(int row) {
+		if(y < row) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 	
