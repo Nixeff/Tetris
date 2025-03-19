@@ -50,27 +50,33 @@ public class Game extends JPanel implements Runnable {
             }
         }
     }
-
-    @Override
-    public void run() {
-        while (running) {
-            if (activeTetromino.isMoving()) {
-                activeTetromino.checkBelow();
-                activeTetromino.moveDown();
-                repaint();
-            } else {
-                spawnRandomTetromino();
-            }
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(Game::start);
-    }
+    
+	@Override
+	public void run() {
+		while(activeTetromino.isMoving) {
+			activeTetromino.checkBelow();
+			activeTetromino.moveDown();
+			
+			// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
+			for(int i = 0; i<24; i++) {
+				gameboard.isRowBlocked(i);
+			}
+			// Removes all the rows that are blocked highest up to lowest first
+			if(gameboard.getMarkedRowsForDeletion().size() > 0) {
+				for (int row : gameboard.getMarkedRowsForDeletion()) {
+					gameboard.deleteRow(row);
+				}
+			}
+			
+			gameboard.renderGameboard();
+			
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+    spawnRandomTetromino();
+    repaint();
+	}
 }

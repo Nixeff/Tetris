@@ -21,7 +21,9 @@ public class Block {
 		this.y = y*10;
 	}
 	
-	
+	public void draw() {
+		
+	}
 	
 	public int getGridX() {
 		return gridX;
@@ -88,8 +90,8 @@ public class Block {
 	
 	public void checkBelow() {
 		ArrayList<GridBlock> row = gameBoard.getGrid().get(y+1);
-		for(int i = 0; i < row.size(); i++) {
-			if(row.get(i).isBlocked()) {
+		for(GridBlock gridSquare : row) {
+			if(gridSquare.isBlocked()) {
 				tetromino.setMoving(false);
 			}
 		}

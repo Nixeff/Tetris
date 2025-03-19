@@ -10,14 +10,14 @@ public abstract class Tetromino  {
 	boolean isMoving = true;
 	
 	public void moveDown() {
-		for(int i = 0; i < bodyPieces.size(); i++) {
-			bodyPieces.get(i).moveDown();
+		for(Block bodyPiece: bodyPieces) {
+			bodyPiece.moveDown();
 		}
 	}
 	
 	public void checkBelow() {
-		for(int i = 0; i < bodyPieces.size(); i++) {
-			bodyPieces.get(i).checkBelow();
+		for(Block bodyPiece: bodyPieces) {
+			bodyPiece.checkBelow();
 		}
 	}
 
