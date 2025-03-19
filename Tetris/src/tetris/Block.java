@@ -1,8 +1,12 @@
 package tetris;
 
+import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
-public class Block {
+import javax.swing.JPanel;
+
+public class Block extends JPanel{
 
 	int gridX;
 	int gridY;
@@ -20,10 +24,12 @@ public class Block {
 		this.x = x*10;
 		this.y = y*10;
 	}
-	
-	public void draw() {
-		
-	}
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.RED);
+        g.fillRect(x, y, 30, 30);
+    }
 	
 	public int getGridX() {
 		return gridX;
@@ -89,11 +95,11 @@ public class Block {
 	}
 	
 	public void checkBelow() {
-		ArrayList<GridBlock> row = gameBoard.getGrid().get(y+1);
-		for(GridBlock gridSquare : row) {
-			if(gridSquare.isBlocked()) {
-				tetromino.setMoving(false);
-			}
+		System.out.println(y+1);
+		System.out.println(gameBoard.getGrid().size());
+		GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
+		if(gridSquareBelow.isBlocked()) {
+			tetromino.setMoving(false);
 		}
 	}
 	

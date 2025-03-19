@@ -32,13 +32,6 @@ public abstract class Tetromino  {
 	public void setMoving(boolean isMoving) {
 		this.isMoving = isMoving;
 	}
-
-    public static Tetromino createTetromino(Gameboard gameboard, String type) {
-        return switch (type) {
-            case "L" -> new LShape(gameboard);
-            default -> throw new IllegalArgumentException("Unknown Tetromino type: " + type);
-        };
-    }
 	
 	
 }
