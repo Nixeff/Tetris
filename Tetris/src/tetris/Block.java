@@ -21,7 +21,9 @@ public class Block {
 		this.y = y*10;
 	}
 	
-	
+	public void draw() {
+		
+	}
 	
 	public int getGridX() {
 		return gridX;
