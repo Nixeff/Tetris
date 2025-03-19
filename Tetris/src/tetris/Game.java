@@ -13,9 +13,11 @@ public class Game extends JPanel implements Runnable {
 
     public Game() {
         player = new Player();
+
         gameboard = new Gameboard(player, this);
         setPreferredSize(new Dimension(600, 1200));
         gameboard.spawnRandomTetromino();
+
         new Thread(this).start();
     }
 
@@ -32,7 +34,28 @@ public class Game extends JPanel implements Runnable {
     }
 
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
+        int cellSize = 30;
+        int columns = 9;
+        int rows = 21;
+
+        g.setColor(Color.GRAY);
+        for (int x = 0; x <= columns * cellSize; x += cellSize) {
+            for (int y = 0; y <= rows * cellSize; y += cellSize) {
+                g.drawRect(x, y, cellSize, cellSize);
+            }
+        }
+
+        g.setColor(Color.RED);
+        if (activeTetromino != null) {
+            for (Block block : activeTetromino.getBodyPieces()) {
+                g.fillRect(block.getGridX() * cellSize, block.getGridY() * cellSize, cellSize, cellSize);
+            }
+        }
+    }
 
     
     public static void main(String[] args) {
