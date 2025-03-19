@@ -2,35 +2,54 @@ package tetris;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
-public class Game  implements Runnable{
+public class Game extends JPanel implements Runnable {
+    private static Gameboard gameboard;
+    private static Player player;
+    private Tetromino activeTetromino;
+    private Random random = new Random();
+    private boolean running = true;
 
-	private static Gameboard gameboard;
-	private static Player player;
-	private Tetromino activeTetromino;
-	
-	public static void start() {
-        JFrame frame = new JFrame("Tetris");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-
+    public Game() {
         player = new Player();
         gameboard = new Gameboard(player);
+        setPreferredSize(new Dimension(300, 600));
 
-        frame.add(gameboard, BorderLayout.CENTER);
+        spawnRandomTetromino();
 
-        frame.setBounds(100, 100, 300, 600);
+        new Thread(this).start();
+    }
+
+    public static void start() {
+        JFrame frame = new JFrame("Tetris");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        Game game = new Game();
+        frame.add(game);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
         frame.setVisible(true);
     }
-	
-	
-	
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            start();
-        });
+
+    private void spawnRandomTetromino() {
+        String[] types = {"L"};
+        String randomType = types[random.nextInt(types.length)];
+        activeTetromino = Tetromino.createTetromino(gameboard, randomType);
+        repaint();
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        g.setColor(Color.RED);
+
+        if (activeTetromino != null) {
+            for (Block block : activeTetromino.getBodyPieces()) {
+                g.fillRect(block.getGridX() * 30, block.getGridY() * 30, 30, 30);
+            }
+        }
+    }
     
 	@Override
 	public void run() {
@@ -57,5 +76,7 @@ public class Game  implements Runnable{
 				e.printStackTrace();
 			}
 		}
+    spawnRandomTetromino();
+    repaint();
 	}
 }
