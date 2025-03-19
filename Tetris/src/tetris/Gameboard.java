@@ -2,7 +2,9 @@ package tetris;
 
 import java.util.ArrayList;
 
-public class Gameboard {
+import javax.swing.JPanel;
+
+public class Gameboard extends JPanel{
 	
 	ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
