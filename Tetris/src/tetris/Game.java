@@ -13,6 +13,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private Tetromino activeTetromino;
     private Random random = new Random();
     private boolean running = true;
+    private int gameSpeed = 1000;
 
     public Game() {
         player = new Player();
@@ -61,11 +62,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	public void run() {
 		while(running) {
 			gameboard.spawnRandomTetromino();
+			
 			while(activeTetromino.isMoving) {
-				activeTetromino.checkBelow();
-				if(activeTetromino.isMoving()) {
-					activeTetromino.moveDown();
-				}
+
 				
 				// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
 				for(int i = 0; i<gameboard.getGrid().size(); i++) {
@@ -74,11 +73,6 @@ public class Game extends JPanel implements Runnable, KeyListener {
 				// Removes all the rows that are blocked highest up to lowest first
 				if(gameboard.getMarkedRowsForDeletion().size() > 0) {
 					player.addScore(gameboard.getMarkedRowsForDeletion().size());
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
 					for (int row : gameboard.getMarkedRowsForDeletion()) {
 						gameboard.deleteRow(row);
 					}
@@ -87,11 +81,6 @@ public class Game extends JPanel implements Runnable, KeyListener {
 				
 				gameboard.repaint();
 				
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 		}
 	}
@@ -114,7 +103,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
         	activeTetromino.moveSideways(1);
             break;
         case KeyEvent.VK_DOWN:
-            System.out.println("Down arrow pressed");
+            gameSpeed = 50;
             break;
         case KeyEvent.VK_UP:
             System.out.println("Up arrow pressed (rotate)");
@@ -130,8 +119,26 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-
+        switch (e.getKeyCode()) {
+        case KeyEvent.VK_LEFT:
+            break;
+        case KeyEvent.VK_RIGHT:
+            break;
+        case KeyEvent.VK_DOWN:
+            gameSpeed = 1000;
+            break;
+        case KeyEvent.VK_UP:
+            break;
+    }
 		
+	}
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public int getGameSpeed() {
+		return gameSpeed;
 	}
 	
 	
