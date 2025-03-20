@@ -21,12 +21,13 @@ public class Block extends JPanel{
 		this.tetromino = tetromino;
 		this.gridX = x;
 		this.gridY = y;
-		this.x = x*10;
-		this.y = y*10;
+		this.x = x*30;
+		this.y = y*30;
 	}
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        System.out.println("hi");
         g.setColor(Color.RED);
         g.fillRect(x, y, 30, 30);
     }
@@ -82,7 +83,7 @@ public class Block extends JPanel{
 	}
 	
 	public void moveDown() {
-		y += 10;
+		y += 30;
 		gridY += 1;
 	}
 	
@@ -95,8 +96,6 @@ public class Block extends JPanel{
 	}
 	
 	public void checkBelow() {
-		System.out.println(y+1);
-		System.out.println(gameBoard.getGrid().size());
 		GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
 		if(gridSquareBelow.isBlocked()) {
 			tetromino.setMoving(false);

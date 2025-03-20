@@ -33,7 +33,7 @@ public class Gameboard extends JPanel{
 				grid.get(i).add(new GridBlock(o,i,30));
 			}
 		}
-		setBackground(Color.BLACK);
+
 	}
 	
     public void spawnRandomTetromino() {
@@ -68,11 +68,23 @@ public class Gameboard extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
         for (Tetromino t : Tetrominos) {
             for (Block block : t.getBodyPieces()) {
                 block.repaint();
             }
         }
+
+        int cellSize = 30;
+        int columns = 9;
+        int rows = 21;
+        g.setColor(Color.GRAY);
+        for (int x = 0; x <= columns * cellSize; x += cellSize) {
+            for (int y = 0; y <= rows * cellSize; y += cellSize) {
+                g.drawRect(x, y, cellSize, cellSize);
+            }
+        }
+
     }
 	
 	public void deleteRow(int row) {
