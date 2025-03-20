@@ -44,7 +44,7 @@ public class Gameboard extends JPanel{
 	}
 	
 	public void spawnRandomTetromino() {
-	    String[] types = {"L", "T", "RL", "I", "O", "S", "Z"};
+	    String[] types = {"L", "T", "RL", "I", "O", "S", "Z"};  
 	    String randomType = types[random.nextInt(types.length)];
 	    Tetromino temp;
 	    

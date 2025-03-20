@@ -94,6 +94,15 @@ public class Block extends JPanel{
 		
 	}
 	
+	public void blockGrid() {
+		ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
+		grid.get(gridY).get(gridX).setBlocked(true);
+	}
+	public void unBlockGrid() {
+		ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
+		grid.get(gridY).get(gridX).setBlocked(false);
+	}
+	
 	
 	/**
 	 * @param direction		Increments of 10. Positive right, Negative left
