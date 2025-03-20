@@ -9,14 +9,13 @@ import java.util.Random;
 
 import javax.swing.JPanel;
 
+import tetris.Tetrominos.IShape;
 import tetris.Tetrominos.LShape;
+import tetris.Tetrominos.OShape;
 import tetris.Tetrominos.ReverseLShape;
 import tetris.Tetrominos.SShape;
-import tetris.Tetrominos.ZShape;
-import tetris.Tetrominos.OShape;
-import tetris.Tetrominos.IShape;
 import tetris.Tetrominos.TShape;
-
+import tetris.Tetrominos.ZShape;
 
 public class Gameboard extends JPanel implements Runnable{
 	
@@ -126,13 +125,46 @@ public class Gameboard extends JPanel implements Runnable{
         int cellSize = 30;
         int columns = 9;
         int rows = 21;
+
         g.setColor(Color.GRAY);
         for (int x = 0; x <= columns * cellSize; x += cellSize) {
             for (int y = 0; y <= rows * cellSize; y += cellSize) {
                 g.drawRect(x, y, cellSize, cellSize);
             }
         }
+    }
 
+    public void deleteRow(int row) {
+        for (Tetromino shape : Tetrominos) {
+            for (Block bodyPart : shape.getBodyPieces()) {
+                if (bodyPart.getY() == row) {
+                    bodyPart.removeSelf();
+                }
+            }
+        }
+        for (Tetromino shape : Tetrominos) {
+            boolean moveIt = true;
+            for (Block bodyPart : shape.getBodyPieces()) {
+                if (!bodyPart.checkIfAbove(row)) {
+                    moveIt = false;
+                }
+            }
+            if (moveIt) {
+                shape.moveDown();
+            }
+        }
+    }
+
+    public ArrayList<ArrayList<GridBlock>> getGrid() {
+        return grid;
+    }
+
+    public ArrayList<Tetromino> getTetrominos() {
+        return Tetrominos;
+    }
+
+    public ArrayList<Integer> getMarkedRowsForDeletion() {
+        return markedRowsForDeletion;
     }
 	
 	public void deleteRow(int row) {

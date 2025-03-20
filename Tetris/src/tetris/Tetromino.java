@@ -3,12 +3,11 @@ package tetris;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import tetris.Tetrominos.LShape;
-
 public abstract class Tetromino  {
 
 	protected ArrayList<Block> bodyPieces = new ArrayList<Block>();
 	protected Color color;
+	protected Gameboard gameboard;
 	boolean isMoving = true;
 	
 	
@@ -46,6 +45,42 @@ public abstract class Tetromino  {
 			}
 		}
 	}
+	
+	public void rotate() {
+	    if (bodyPieces.isEmpty()) return;
+
+	    Block pivot = bodyPieces.get(0);
+	    int pivotX = pivot.getGridX();
+	    int pivotY = pivot.getGridY();
+
+	    System.out.println("Pivot: (" + pivotX + ", " + pivotY + ")");
+
+	    ArrayList<int[]> newPositions = new ArrayList<>();
+
+	    for (Block block : bodyPieces) {
+	        int relX = block.getGridX() - pivotX;
+	        int relY = block.getGridY() - pivotY;
+
+	        int newX = pivotX - relY;
+	        int newY = pivotY + relX;
+
+	        System.out.println("Block: (" + block.getGridX() + ", " + block.getGridY() + ") -> (" + newX + ", " + newY + ")");
+
+	        newPositions.add(new int[]{newX, newY});
+	    }
+
+	    for (int i = 0; i < bodyPieces.size(); i++) {
+	        bodyPieces.get(i).setGridX(newPositions.get(i)[0]);
+	        bodyPieces.get(i).setGridY(newPositions.get(i)[1]);
+	    }
+
+	    
+	    if (gameboard != null) {
+	        gameboard.repaint();
+	    }
+	}
+
+
 	
 	public void checkBelow() {
 		for(Block bodyPiece: bodyPieces) {
