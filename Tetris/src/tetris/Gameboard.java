@@ -33,7 +33,7 @@ public class Gameboard extends JPanel{
 				grid.get(i).add(new GridBlock(o,i,30));
 			}
 		}
-
+		setLayout(null);
 	}
 	
     public void spawnRandomTetromino() {
