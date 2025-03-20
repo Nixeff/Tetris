@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends JPanel implements Runnable, KeyListener {
@@ -68,10 +69,15 @@ public class Game extends JPanel implements Runnable, KeyListener {
 				}
 				// Removes all the rows that are blocked highest up to lowest first
 				if(gameboard.getMarkedRowsForDeletion().size() > 0) {
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
 					for (int row : gameboard.getMarkedRowsForDeletion()) {
-						System.out.println("hi");
 						gameboard.deleteRow(row);
 					}
+					gameboard.setMarkedRowsForDeletion(new ArrayList<Integer>());
 				}
 				
 				gameboard.repaint();
