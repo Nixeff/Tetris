@@ -3,6 +3,7 @@ package tetris;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ public class Gameboard extends JPanel{
 	ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
 	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // int cant be used and Integer is the same apperently? idk
+	ArrayList<String> bag = new ArrayList<>();
 	
 	Game game;
 	
@@ -44,8 +46,12 @@ public class Gameboard extends JPanel{
 	}
 	
 	public void spawnRandomTetromino() {
-	    String[] types = {"L", "T", "RL", "I", "O", "S", "Z"};
-	    String randomType = types[random.nextInt(types.length)];
+	    
+        if (bag.isEmpty()) {
+            refillBag();
+        }
+        
+	    String randomType = bag.remove(0);
 	    Tetromino temp;
 	    
 	    switch (randomType) {
@@ -87,8 +93,12 @@ public class Gameboard extends JPanel{
 	        System.out.println("lul: " + e.getMessage());
 	    }
 	}
-
-
+	
+    private void refillBag() {
+        String[] allTypes = {"L", "T", "RL", "I", "O", "S", "Z"};
+        Collections.addAll(bag, allTypes);
+        Collections.shuffle(bag);
+    }
 	
 	public void isRowBlocked(int row) {
 		boolean isBlocked = true;
