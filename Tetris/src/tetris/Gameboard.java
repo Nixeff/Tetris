@@ -1,6 +1,7 @@
 package tetris;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -42,6 +43,7 @@ public class Gameboard extends JPanel{
 				grid.get(i).add(new GridBlock(o,i,30));
 			}
 		}
+		this.setPreferredSize(new Dimension(300, 700));
 		setLayout(null);
 	}
 	
@@ -153,7 +155,13 @@ public class Gameboard extends JPanel{
 				}
 			}
 			if(moveIt) {
+				for(Block bodyParts: shape.getBodyPieces()) {
+					bodyParts.unBlockGrid();
+				}
 				shape.moveDown();
+				for(Block bodyParts: shape.getBodyPieces()) {
+					bodyParts.blockGrid();
+				}
 			}
 		}
 	}

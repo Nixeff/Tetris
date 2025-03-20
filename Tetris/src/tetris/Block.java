@@ -126,7 +126,7 @@ public class Block extends JPanel{
 	}
 	
 	public boolean checkIfAbove(int row) {
-		if(y < row) {
+		if(gridY < row) {
 			return true;
 		} else {
 			return false;

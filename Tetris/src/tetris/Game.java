@@ -29,19 +29,23 @@ public class Game extends JPanel implements Runnable, KeyListener {
     public static void start() {
         JFrame frame = new JFrame("Tetris");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
         Game game = new Game();
         frame.add(game);
+        frame.add(gameboard, BorderLayout.CENTER);  // Game in center
+        frame.add(player, BorderLayout.EAST);       // Score on right
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.add(gameboard);
+
+        
     }
 
 
     @Override
     protected void paintComponent(Graphics g) {
-
+    	
     }
     
 
@@ -69,6 +73,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 				}
 				// Removes all the rows that are blocked highest up to lowest first
 				if(gameboard.getMarkedRowsForDeletion().size() > 0) {
+					player.addScore(gameboard.getMarkedRowsForDeletion().size());
 					try {
 						Thread.sleep(1000);
 					} catch (InterruptedException e) {
