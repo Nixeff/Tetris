@@ -68,12 +68,6 @@ public class Gameboard extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
-        for (Tetromino t : Tetrominos) {
-            for (Block block : t.getBodyPieces()) {
-                block.repaint();
-            }
-        }
 
         int cellSize = 30;
         int columns = 9;
