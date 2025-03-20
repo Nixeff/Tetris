@@ -32,7 +32,7 @@ public class Block extends JPanel{
         super.paintComponent(g);
         System.out.println("hi");
         // This is fucking magical witchcraft
-        g.setColor(Color.RED);
+        g.setColor(tetromino.color);
         g.fillRect(0, 0, 30, 30);
         g.setColor(Color.BLACK); // Border for visibility
         g.drawRect(0, 0, 30, 30);
