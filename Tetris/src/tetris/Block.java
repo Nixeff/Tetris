@@ -30,7 +30,6 @@ public class Block extends JPanel{
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        System.out.println("hi");
         // This is fucking magical witchcraft
         g.setColor(tetromino.color);
         g.fillRect(0, 0, 30, 30);
@@ -86,6 +85,8 @@ public class Block extends JPanel{
 		if(tetromino.getBodyPieces().size() == 0) {
 			gameBoard.getTetrominos().remove(tetromino);
 		}
+		gameBoard.remove(this);
+		unBlockGrid();
 	}
 	
 	public void moveDown() {

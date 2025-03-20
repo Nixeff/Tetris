@@ -105,6 +105,8 @@ public class Gameboard extends JPanel{
 		for(GridBlock gridSquare : grid.get(row)) {
 			if(!gridSquare.isBlocked()) {
 				isBlocked = false;
+			} else {
+				
 			}
 		}
 		if(isBlocked) {
@@ -129,12 +131,19 @@ public class Gameboard extends JPanel{
     }
 	
 	public void deleteRow(int row) {
+		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
 		for(Tetromino shape : Tetrominos) {
 			for(Block bodyPart : shape.getBodyPieces()) {
-				if(bodyPart.getY() == row) {
-					bodyPart.removeSelf();
+				System.out.println("Checking");
+				if(bodyPart.getGridY() == row) {
+					System.out.println("Adding "+bodyPart.getGridX()+ " "+bodyPart.getGridY());
+					markedForDeletion.add(bodyPart);
 				}
 			}
+		}
+		for(Block bodyPart: markedForDeletion) {
+			System.out.println("Removing");
+			bodyPart.removeSelf();
 		}
 		for(Tetromino shape : Tetrominos) {
 			boolean moveIt = true;
@@ -160,6 +169,12 @@ public class Gameboard extends JPanel{
 	public ArrayList<Integer> getMarkedRowsForDeletion() {
 		return markedRowsForDeletion;
 	}
+
+	public void setMarkedRowsForDeletion(ArrayList<Integer> markedRowsForDeletion) {
+		this.markedRowsForDeletion = markedRowsForDeletion;
+	}
+	
+	
 	
 	
 	
