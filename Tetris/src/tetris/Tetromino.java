@@ -15,6 +15,18 @@ public abstract class Tetromino  {
 		}
 	}
 	
+	public void moveSideways(int direction) {
+		if(direction == 0) {
+			for(Block block: bodyPieces) {
+				block.moveSideways(-30);
+			}
+		}else {
+			for(Block block: bodyPieces) {
+				block.moveSideways(30);
+			}
+		}
+	}
+	
 	public void checkBelow() {
 		for(Block bodyPiece: bodyPieces) {
 			bodyPiece.checkBelow();

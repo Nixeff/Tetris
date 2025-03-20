@@ -98,7 +98,8 @@ public class Block extends JPanel{
 	 * @param direction		Increments of 10. Positive right, Negative left
 	 */
 	public void moveSideways(int direction) {
-		gridX += direction;
+		x += direction;
+		gridX += direction/30;
 	}
 	
 	public void checkBelow() {

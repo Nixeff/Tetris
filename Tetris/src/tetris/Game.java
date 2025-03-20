@@ -2,9 +2,11 @@ package tetris;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
-public class Game extends JPanel implements Runnable {
+public class Game extends JPanel implements Runnable, KeyListener {
     private static Gameboard gameboard;
     private static Player player;
     private Tetromino activeTetromino;
@@ -17,6 +19,9 @@ public class Game extends JPanel implements Runnable {
         gameboard = new Gameboard(player, this);
         setPreferredSize(new Dimension(600, 1200));
         gameboard.spawnRandomTetromino();
+        
+        setFocusable(true);  // Allows key events
+        addKeyListener(this);
 
         new Thread(this).start();
     }
@@ -38,6 +43,8 @@ public class Game extends JPanel implements Runnable {
     protected void paintComponent(Graphics g) {
 
     }
+    
+
 
     
     public static void main(String[] args) {
@@ -81,6 +88,36 @@ public class Game extends JPanel implements Runnable {
 
 	public void setActiveTetromino(Tetromino activeTetromino) {
 		this.activeTetromino = activeTetromino;
+	}
+	
+    @Override
+    public void keyPressed(KeyEvent e) {
+
+    }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+        switch (e.getKeyCode()) {
+        case KeyEvent.VK_LEFT:
+            activeTetromino.moveSideways(0);
+            break;
+        case KeyEvent.VK_RIGHT:
+        	activeTetromino.moveSideways(1);
+            break;
+        case KeyEvent.VK_DOWN:
+            System.out.println("Down arrow pressed");
+            break;
+        case KeyEvent.VK_UP:
+            System.out.println("Up arrow pressed (rotate)");
+            break;
+    }
+		
 	}
 	
 	
