@@ -1,5 +1,6 @@
 package tetris;
 
+import java.awt.Color;
 import java.util.ArrayList;
 
 import tetris.Tetrominos.LShape;
@@ -7,7 +8,9 @@ import tetris.Tetrominos.LShape;
 public abstract class Tetromino  {
 
 	protected ArrayList<Block> bodyPieces = new ArrayList<Block>();
+	protected Color color;
 	boolean isMoving = true;
+	
 	
 	public void moveDown() {
 		for(Block bodyPiece: bodyPieces) {
