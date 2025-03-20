@@ -133,39 +133,6 @@ public class Gameboard extends JPanel implements Runnable{
             }
         }
     }
-
-    public void deleteRow(int row) {
-        for (Tetromino shape : Tetrominos) {
-            for (Block bodyPart : shape.getBodyPieces()) {
-                if (bodyPart.getY() == row) {
-                    bodyPart.removeSelf();
-                }
-            }
-        }
-        for (Tetromino shape : Tetrominos) {
-            boolean moveIt = true;
-            for (Block bodyPart : shape.getBodyPieces()) {
-                if (!bodyPart.checkIfAbove(row)) {
-                    moveIt = false;
-                }
-            }
-            if (moveIt) {
-                shape.moveDown();
-            }
-        }
-    }
-
-    public ArrayList<ArrayList<GridBlock>> getGrid() {
-        return grid;
-    }
-
-    public ArrayList<Tetromino> getTetrominos() {
-        return Tetrominos;
-    }
-
-    public ArrayList<Integer> getMarkedRowsForDeletion() {
-        return markedRowsForDeletion;
-    }
 	
 	public void deleteRow(int row) {
 		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
