@@ -17,12 +17,29 @@ public abstract class Tetromino  {
 	
 	public void moveSideways(int direction) {
 		if(direction == 0) {
+			boolean move = true;
 			for(Block block: bodyPieces) {
-				block.moveSideways(-30);
+				if(block.getGridX()-1<0) {
+					move = false;
+				}
 			}
+			if(move) {
+				for(Block block: bodyPieces) {
+					block.moveSideways(-1);
+				}
+			}
+
 		}else {
+			boolean move = true;
 			for(Block block: bodyPieces) {
-				block.moveSideways(30);
+				if(block.getGridX()+1>9) {
+					move = false;
+				}
+			}
+			if(move) {
+				for(Block block: bodyPieces) {
+					block.moveSideways(1);
+				}
 			}
 		}
 	}
