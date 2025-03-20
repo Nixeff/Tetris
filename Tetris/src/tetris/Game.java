@@ -94,17 +94,6 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	
     @Override
     public void keyPressed(KeyEvent e) {
-
-    }
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void keyReleased(KeyEvent e) {
         switch (e.getKeyCode()) {
         case KeyEvent.VK_LEFT:
             activeTetromino.moveSideways(0);
@@ -119,6 +108,17 @@ public class Game extends JPanel implements Runnable, KeyListener {
             System.out.println("Up arrow pressed (rotate)");
             break;
     }
+    }
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+
 		
 	}
 	
