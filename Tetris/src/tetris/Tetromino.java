@@ -60,6 +60,15 @@ public abstract class Tetromino  {
 
 	public void setMoving(boolean isMoving) {
 		this.isMoving = isMoving;
+		if(isMoving) {
+			for(Block block: bodyPieces) {
+				block.unBlockGrid();
+			}
+		} else {
+			for(Block block: bodyPieces) {
+				block.blockGrid();
+			}
+		}
 	}
 	
 	

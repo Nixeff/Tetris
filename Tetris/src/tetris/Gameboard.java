@@ -46,12 +46,12 @@ public class Gameboard extends JPanel{
 	}
 	
 	public void spawnRandomTetromino() {
-	    
         if (bag.isEmpty()) {
             refillBag();
         }
         
 	    String randomType = bag.remove(0);
+
 	    Tetromino temp;
 	    
 	    switch (randomType) {

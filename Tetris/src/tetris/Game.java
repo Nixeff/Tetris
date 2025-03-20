@@ -55,33 +55,35 @@ public class Game extends JPanel implements Runnable, KeyListener {
     
 	@Override
 	public void run() {
-		while(activeTetromino.isMoving) {
-			activeTetromino.checkBelow();
-			if(activeTetromino.isMoving()) {
-				activeTetromino.moveDown();
-			}
-			
-			// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
-			for(int i = 0; i<gameboard.getGrid().size(); i++) {
-				gameboard.isRowBlocked(i);
-			}
-			// Removes all the rows that are blocked highest up to lowest first
-			if(gameboard.getMarkedRowsForDeletion().size() > 0) {
-				for (int row : gameboard.getMarkedRowsForDeletion()) {
-					System.out.println("hi");
-					gameboard.deleteRow(row);
+		while(running) {
+			gameboard.spawnRandomTetromino();
+			while(activeTetromino.isMoving) {
+				activeTetromino.checkBelow();
+				if(activeTetromino.isMoving()) {
+					activeTetromino.moveDown();
+				}
+				
+				// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
+				for(int i = 0; i<gameboard.getGrid().size(); i++) {
+					gameboard.isRowBlocked(i);
+				}
+				// Removes all the rows that are blocked highest up to lowest first
+				if(gameboard.getMarkedRowsForDeletion().size() > 0) {
+					for (int row : gameboard.getMarkedRowsForDeletion()) {
+						System.out.println("hi");
+						gameboard.deleteRow(row);
+					}
+				}
+				
+				gameboard.repaint();
+				
+				try {
+					Thread.sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
-			
-			gameboard.repaint();
-			
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
 		}
-    repaint();
 	}
 
 	public Tetromino getActiveTetromino() {
