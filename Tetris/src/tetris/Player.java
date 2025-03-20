@@ -1,12 +1,32 @@
 package tetris;
 
-public class Player {
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Player extends JComponent{
     private int score;
     private int highScore;
+    private JLabel lable;
 
     public Player() {
         this.score = 0;
         this.highScore = 0;
+        this.setPreferredSize(new Dimension(100, 200));
+        this.setLayout(new FlowLayout());
+        lable = new JLabel();
+        lable.setText("0000");
+        
+        this.add(lable);
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+    	
     }
 
     public void addScore(int rowsCleared) {
@@ -16,6 +36,7 @@ public class Player {
         if (score > highScore) {
             highScore = score;
         }
+        lable.setText(Integer.toString(score));
     }
 
     private int calculatePoints(int rowsCleared) {
