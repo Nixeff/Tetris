@@ -18,12 +18,13 @@ import tetris.Tetrominos.IShape;
 import tetris.Tetrominos.TShape;
 
 
-public class Gameboard extends JPanel{
+public class Gameboard extends JPanel implements Runnable{
 	
 	ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
 	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // int cant be used and Integer is the same apperently? idk
 	ArrayList<String> bag = new ArrayList<>();
+	Tetromino activeTetromino;
 	
 	Game game;
 	
@@ -45,6 +46,7 @@ public class Gameboard extends JPanel{
 		}
 		this.setPreferredSize(new Dimension(300, 700));
 		setLayout(null);
+		new Thread(this).start();
 	}
 	
 	public void spawnRandomTetromino() {
@@ -87,6 +89,7 @@ public class Gameboard extends JPanel{
 	        
 	        Tetrominos.add(temp);
 	        game.setActiveTetromino(temp);
+	        activeTetromino = temp;
 	        
 	        for (Block block : temp.getBodyPieces()) {
 	            this.add(block);
@@ -136,7 +139,6 @@ public class Gameboard extends JPanel{
 		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
 		for(Tetromino shape : Tetrominos) {
 			for(Block bodyPart : shape.getBodyPieces()) {
-				System.out.println("Checking");
 				if(bodyPart.getGridY() == row) {
 					System.out.println("Adding "+bodyPart.getGridX()+ " "+bodyPart.getGridY());
 					markedForDeletion.add(bodyPart);
@@ -144,7 +146,6 @@ public class Gameboard extends JPanel{
 			}
 		}
 		for(Block bodyPart: markedForDeletion) {
-			System.out.println("Removing");
 			bodyPart.removeSelf();
 		}
 		for(Tetromino shape : Tetrominos) {
@@ -181,6 +182,33 @@ public class Gameboard extends JPanel{
 	public void setMarkedRowsForDeletion(ArrayList<Integer> markedRowsForDeletion) {
 		this.markedRowsForDeletion = markedRowsForDeletion;
 	}
+
+	@Override
+	public void run() {
+		while(game.isRunning()) {
+			System.out.println("here");
+			if(activeTetromino != null) {
+				
+				while(activeTetromino.isMoving()) {
+					activeTetromino.checkBelow();
+					if(activeTetromino.isMoving()) {
+						activeTetromino.moveDown();
+					}
+					try {
+						Thread.sleep(game.getGameSpeed());
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+
+			}
+		}
+
+
+		
+	}
+
 	
 	
 	
