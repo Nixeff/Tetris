@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Game extends JPanel implements Runnable, KeyListener {
@@ -12,6 +13,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private Tetromino activeTetromino;
     private Random random = new Random();
     private boolean running = true;
+    private int gameSpeed = 1000;
 
     public Game() {
         player = new Player();
@@ -28,19 +30,23 @@ public class Game extends JPanel implements Runnable, KeyListener {
     public static void start() {
         JFrame frame = new JFrame("Tetris");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLayout(new BorderLayout());
 
         Game game = new Game();
         frame.add(game);
+        frame.add(gameboard, BorderLayout.CENTER);  // Game in center
+        frame.add(player, BorderLayout.EAST);       // Score on right
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
-        frame.add(gameboard);
+
+        
     }
 
 
     @Override
     protected void paintComponent(Graphics g) {
-
+    	
     }
     
 
@@ -56,11 +62,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	public void run() {
 		while(running) {
 			gameboard.spawnRandomTetromino();
+			
 			while(activeTetromino.isMoving) {
-				activeTetromino.checkBelow();
-				if(activeTetromino.isMoving()) {
-					activeTetromino.moveDown();
-				}
+
 				
 				// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
 				for(int i = 0; i<gameboard.getGrid().size(); i++) {
@@ -68,19 +72,15 @@ public class Game extends JPanel implements Runnable, KeyListener {
 				}
 				// Removes all the rows that are blocked highest up to lowest first
 				if(gameboard.getMarkedRowsForDeletion().size() > 0) {
+					player.addScore(gameboard.getMarkedRowsForDeletion().size());
 					for (int row : gameboard.getMarkedRowsForDeletion()) {
-						System.out.println("hi");
 						gameboard.deleteRow(row);
 					}
+					gameboard.setMarkedRowsForDeletion(new ArrayList<Integer>());
 				}
 				
 				gameboard.repaint();
 				
-				try {
-					Thread.sleep(100);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
 			}
 		}
 	}
@@ -103,7 +103,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
         	activeTetromino.moveSideways(1);
             break;
         case KeyEvent.VK_DOWN:
-            System.out.println("Down arrow pressed");
+            gameSpeed = 50;
             break;
         case KeyEvent.VK_UP:
         	repaint();
@@ -121,8 +121,26 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-
+        switch (e.getKeyCode()) {
+        case KeyEvent.VK_LEFT:
+            break;
+        case KeyEvent.VK_RIGHT:
+            break;
+        case KeyEvent.VK_DOWN:
+            gameSpeed = 1000;
+            break;
+        case KeyEvent.VK_UP:
+            break;
+    }
 		
+	}
+
+	public boolean isRunning() {
+		return running;
+	}
+
+	public int getGameSpeed() {
+		return gameSpeed;
 	}
 	
 	

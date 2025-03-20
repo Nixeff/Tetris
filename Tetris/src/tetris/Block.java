@@ -30,6 +30,7 @@ public class Block extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+      
         g.setColor(tetromino.color);
         g.fillRect(0, 0, 30, 30);
         g.setColor(Color.BLACK); // Border for visibility
@@ -72,47 +73,59 @@ public class Block extends JPanel {
         this.y = y;
     }
 
-    public void removeSelf() {
-        tetromino.getBodyPieces().remove(this);
-        if (tetromino.getBodyPieces().size() == 0) {
-            gameBoard.getTetrominos().remove(tetromino);
-        }
-    }
 
-    public void moveDown() {
-        y += 30;
-        gridY += 1;
-        setBounds(x, y, 30, 30); // Reposition the component
-    }
+	
+	public void removeSelf() {
+		tetromino.getBodyPieces().remove(this);
+		if(tetromino.getBodyPieces().size() == 0) {
+			gameBoard.getTetrominos().remove(tetromino);
+		}
+		gameBoard.remove(this);
+		unBlockGrid();
+	}
+	
+	public void moveDown() {
+		y += 30;
+		gridY += 1;
+		
+	}
+	
+	public void blockGrid() {
+		ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
+		grid.get(gridY).get(gridX).setBlocked(true);
+	}
+	public void unBlockGrid() {
+		ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
+		grid.get(gridY).get(gridX).setBlocked(false);
+	}
+	
+	
+	/**
+	 * @param direction		Increments of 10. Positive right, Negative left
+	 */
+	public void moveSideways(int direction) {
+		gridX += direction;
+		x = gridX*30;
+	}
+	
+	public void checkBelow() {
+		if(gridY+1<22) {
+			GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
+			if(gridSquareBelow.isBlocked()) {
+				tetromino.setMoving(false);
+			}
+		} else {
+			tetromino.setMoving(false);
+		}
 
-    public void blockGrid() {
-        ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
-        grid.get(gridY).get(gridX).setBlocked(true);
-    }
-
-    public void unBlockGrid() {
-        ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
-        grid.get(gridY).get(gridX).setBlocked(false);
-    }
-
-    public void moveSideways(int direction) {
-        gridX += direction;
-        x = gridX * 30;
-        setBounds(x, y, 30, 30); // Reposition the component
-    }
-
-    public void checkBelow() {
-        if (gridY + 1 < 22) {
-            GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY + 1).get(gridX);
-            if (gridSquareBelow.isBlocked()) {
-                tetromino.setMoving(false);
-            }
-        } else {
-            tetromino.setMoving(false);
-        }
-    }
-
-    public boolean checkIfAbove(int row) {
-        return y < row;
-    }
+	}
+	
+	public boolean checkIfAbove(int row) {
+		if(gridY < row) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }
