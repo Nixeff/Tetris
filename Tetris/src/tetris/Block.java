@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 public class Block extends JPanel{
@@ -23,13 +24,18 @@ public class Block extends JPanel{
 		this.gridY = y;
 		this.x = x*30;
 		this.y = y*30;
+		
+		setBounds(x,y,30,30);
 	}
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         System.out.println("hi");
+        // This is fucking magical witchcraft
         g.setColor(Color.RED);
-        g.fillRect(x, y, 30, 30);
+        g.fillRect(0, 0, 30, 30);
+        g.setColor(Color.BLACK); // Border for visibility
+        g.drawRect(0, 0, 30, 30);
     }
 	
 	public int getGridX() {
