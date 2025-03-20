@@ -19,7 +19,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
         gameboard = new Gameboard(player, this);
         setPreferredSize(new Dimension(600, 1200));
         
-        setFocusable(true);  // Allows key events
+        setFocusable(true);
         addKeyListener(this);
 
         new Thread(this).start();
@@ -106,7 +106,9 @@ public class Game extends JPanel implements Runnable, KeyListener {
             System.out.println("Down arrow pressed");
             break;
         case KeyEvent.VK_UP:
-            System.out.println("Up arrow pressed (rotate)");
+        	repaint();
+        	activeTetromino.rotate();
+        	repaint();
             break;
     }
     }
