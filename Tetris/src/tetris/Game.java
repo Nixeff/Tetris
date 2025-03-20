@@ -18,7 +18,6 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
         gameboard = new Gameboard(player, this);
         setPreferredSize(new Dimension(600, 1200));
-        gameboard.spawnRandomTetromino();
         
         setFocusable(true);  // Allows key events
         addKeyListener(this);
