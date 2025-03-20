@@ -91,6 +91,7 @@ public class Block extends JPanel{
 	public void moveDown() {
 		y += 30;
 		gridY += 1;
+		
 	}
 	
 	
@@ -99,13 +100,19 @@ public class Block extends JPanel{
 	 */
 	public void moveSideways(int direction) {
 		gridX += direction;
+		x = gridX*30;
 	}
 	
 	public void checkBelow() {
-		GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
-		if(gridSquareBelow.isBlocked()) {
+		if(gridY+1<22) {
+			GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
+			if(gridSquareBelow.isBlocked()) {
+				tetromino.setMoving(false);
+			}
+		} else {
 			tetromino.setMoving(false);
 		}
+
 	}
 	
 	public boolean checkIfAbove(int row) {
