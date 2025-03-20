@@ -8,6 +8,13 @@ import java.util.Random;
 import javax.swing.JPanel;
 
 import tetris.Tetrominos.LShape;
+import tetris.Tetrominos.ReverseLShape;
+import tetris.Tetrominos.SShape;
+import tetris.Tetrominos.ZShape;
+import tetris.Tetrominos.OShape;
+import tetris.Tetrominos.IShape;
+import tetris.Tetrominos.TShape;
+
 
 public class Gameboard extends JPanel{
 	
@@ -36,22 +43,52 @@ public class Gameboard extends JPanel{
 		setLayout(null);
 	}
 	
-    public void spawnRandomTetromino() {
-        String[] types = {"L"};
-        String randomType = types[random.nextInt(types.length)];
-        Tetromino temp;
-        switch(randomType){
-        	case "L":
-        		temp = new LShape(this);
-        		Tetrominos.add(temp);
-        		game.setActiveTetromino(temp);
-        		for(Block block: temp.getBodyPieces()) {
-        			this.add(block);
-        		}
-        	default:
-        		System.out.println("Lul");
-        }
-    }
+	public void spawnRandomTetromino() {
+	    String[] types = {"L", "T", "RL", "I", "O", "S", "Z"};
+	    String randomType = types[random.nextInt(types.length)];
+	    Tetromino temp;
+	    
+	    switch (randomType) {
+	        case "L":
+	            temp = new LShape(this);
+	            break;
+	        case "T":
+	            temp = new TShape(this);
+	            break;
+	        case "RL":
+	            temp = new ReverseLShape(this);
+	            break;
+	        case "I":
+	            temp = new IShape(this);
+	            break;
+	        case "O":
+	            temp = new OShape(this);
+	            break;
+	        case "S":
+	            temp = new SShape(this);
+	            break;
+	        case "Z":
+	            temp = new ZShape(this);
+	            break;
+	        default:
+	            System.out.println("lul");
+	            return;
+	    }
+
+	    try {
+	        
+	        Tetrominos.add(temp);
+	        game.setActiveTetromino(temp);
+	        
+	        for (Block block : temp.getBodyPieces()) {
+	            this.add(block);
+	        }
+	    } catch (Exception e) {
+	        System.out.println("lul: " + e.getMessage());
+	    }
+	}
+
+
 	
 	public void isRowBlocked(int row) {
 		boolean isBlocked = true;
