@@ -17,6 +17,15 @@ public abstract class Tetromino  {
 		}
 	}
 	
+	public void instantPlace() {
+		while(isMoving) {
+			checkBelow();
+			if(isMoving) {
+				moveDown();
+			}
+		}
+	}
+	
 	public void moveSideways(int direction) {
 		if(isMoving) {
 			if(direction == 0) {
