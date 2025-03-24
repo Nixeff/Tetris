@@ -26,6 +26,14 @@ public abstract class Tetromino  {
 		}
 	}
 	
+	public void displayRemoveSelf(ArrayList<Tetromino> here, TetrominoQueue que) {
+		ArrayList<Block> tempList = new ArrayList<>(bodyPieces);
+		for(Block bodyPiece: tempList) {
+			bodyPiece.removeSelf(this,que);
+		}
+		here.remove(this);
+	}
+	
 	public void moveSideways(int direction) {
 		if(isMoving) {
 			if(direction == 0) {

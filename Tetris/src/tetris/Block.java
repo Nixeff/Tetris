@@ -81,6 +81,11 @@ public class Block extends JPanel {
 		unBlockGrid();
 	}
 	
+	public void removeSelf(Tetromino tetromino, TetrominoQueue que) {
+		tetromino.bodyPieces.remove(this);
+		que.remove(this);
+	}
+	
 	public void moveDown() {
 		y += 30;
 		gridY += 1;

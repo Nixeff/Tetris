@@ -10,6 +10,8 @@ import java.util.Random;
 public class Game extends JPanel implements Runnable, KeyListener {
     private static Gameboard gameboard;
     private static Player player;
+    private static TetrominoQueue tetrominoQueue;
+    private static RightSideFrame rightSideFrame;
     private Tetromino activeTetromino;
     private Random random = new Random();
     private boolean running = true;
@@ -17,8 +19,10 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
     public Game() {
         player = new Player();
-
         gameboard = new Gameboard(player, this);
+        tetrominoQueue = new TetrominoQueue(gameboard);
+        rightSideFrame = new RightSideFrame(player,tetrominoQueue);
+        
         setPreferredSize(new Dimension(600, 1200));
         
         setFocusable(true);
@@ -35,7 +39,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
         Game game = new Game();
         frame.add(game);
         frame.add(gameboard, BorderLayout.CENTER);  // Game in center
-        frame.add(player, BorderLayout.EAST);       // Score on right
+        frame.add(rightSideFrame, BorderLayout.EAST);       // Score on right
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -63,6 +67,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 		while(running) {
 			System.out.println("New tetromino");
 			gameboard.spawnRandomTetromino();
+			tetrominoQueue.update();
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {
@@ -85,6 +90,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 				}
 				
 				gameboard.repaint();
+				rightSideFrame.repaint();
 				
 			}
 		}
