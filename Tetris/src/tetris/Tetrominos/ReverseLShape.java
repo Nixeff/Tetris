@@ -7,6 +7,7 @@ import tetris.Tetromino;
 
 public class ReverseLShape extends Tetromino {
     public ReverseLShape(Gameboard gb) {
+    	this.gameboard = gb;
         color = Color.orange;
 
         bodyPieces.add(new Block(gb, this, 7, 1));

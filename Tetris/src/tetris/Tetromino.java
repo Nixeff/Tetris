@@ -18,29 +18,31 @@ public abstract class Tetromino  {
 	}
 	
 	public void moveSideways(int direction) {
-		if(direction == 0) {
-			boolean move = true;
-			for(Block block: bodyPieces) {
-				if(block.getGridX()-1<0) {
-					move = false;
-				}
-			}
-			if(move) {
+		if(isMoving) {
+			if(direction == 0) {
+				boolean move = true;
 				for(Block block: bodyPieces) {
-					block.moveSideways(-1);
+					if(!block.checkSides(0)) {
+						move = false;
+					}
 				}
-			}
+				if(move) {
+					for(Block block: bodyPieces) {
+						block.moveSideways(-1);
+					}
+				}
 
-		}else {
-			boolean move = true;
-			for(Block block: bodyPieces) {
-				if(block.getGridX()+1>9) {
-					move = false;
-				}
-			}
-			if(move) {
+			}else {
+				boolean move = true;
 				for(Block block: bodyPieces) {
-					block.moveSideways(1);
+					if(!block.checkSides(1)) {
+						move = false;
+					}
+				}
+				if(move) {
+					for(Block block: bodyPieces) {
+						block.moveSideways(1);
+					}
 				}
 			}
 		}
@@ -53,7 +55,7 @@ public abstract class Tetromino  {
 	    int pivotX = pivot.getGridX();
 	    int pivotY = pivot.getGridY();
 
-	    System.out.println("Pivot: (" + pivotX + ", " + pivotY + ")");
+	    //System.out.println("Pivot: (" + pivotX + ", " + pivotY + ")");
 
 	    ArrayList<int[]> newPositions = new ArrayList<>();
 
@@ -64,7 +66,7 @@ public abstract class Tetromino  {
 	        int newX = pivotX - relY;
 	        int newY = pivotY + relX;
 
-	        System.out.println("Block: (" + block.getGridX() + ", " + block.getGridY() + ") -> (" + newX + ", " + newY + ")");
+	        //System.out.println("Block: (" + block.getGridX() + ", " + block.getGridY() + ") -> (" + newX + ", " + newY + ")");
 
 	        newPositions.add(new int[]{newX, newY});
 	    }
@@ -96,16 +98,11 @@ public abstract class Tetromino  {
 		return isMoving;
 	}
 
-	public void setMoving(boolean isMoving) {
-		this.isMoving = isMoving;
-		if(isMoving) {
-			for(Block block: bodyPieces) {
-				block.unBlockGrid();
-			}
-		} else {
-			for(Block block: bodyPieces) {
-				block.blockGrid();
-			}
+	public void stopMoving() {
+		this.isMoving = false;
+		for(Block block: bodyPieces) {
+			block.blockGrid();
+			gameboard.addPlacedBlocks(block);
 		}
 	}
 	

@@ -61,11 +61,16 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	@Override
 	public void run() {
 		while(running) {
+			System.out.println("New tetromino");
 			gameboard.spawnRandomTetromino();
+			try {
+				Thread.sleep(100);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			
 			while(activeTetromino.isMoving) {
-
-				
 				// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
 				for(int i = 0; i<gameboard.getGrid().size(); i++) {
 					gameboard.isRowBlocked(i);

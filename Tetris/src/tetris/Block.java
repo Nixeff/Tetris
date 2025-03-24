@@ -76,10 +76,7 @@ public class Block extends JPanel {
 
 	
 	public void removeSelf() {
-		tetromino.getBodyPieces().remove(this);
-		if(tetromino.getBodyPieces().size() == 0) {
-			gameBoard.getTetrominos().remove(tetromino);
-		}
+		gameBoard.placedBlocks.remove(this);
 		gameBoard.remove(this);
 		unBlockGrid();
 	}
@@ -112,12 +109,44 @@ public class Block extends JPanel {
 		if(gridY+1<22) {
 			GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
 			if(gridSquareBelow.isBlocked()) {
-				tetromino.setMoving(false);
+				tetromino.stopMoving();
 			}
 		} else {
-			tetromino.setMoving(false);
+			tetromino.stopMoving();
 		}
+	}
+	
+	/**
+	 * @param direction		Increments of 10. Positive right, Negative left
+	 */
+	public boolean checkSides(int direction) {
+		switch(direction) {
+			case 0:
+				if(gridX-1>-1) {
+					GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY).get(gridX-1);
+					if(gridSquareBelow.isBlocked()) {
+						return false;
+					} else {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			case 1:
+				if(gridX+1<10) {
+					GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY).get(gridX+1);
+					if(gridSquareBelow.isBlocked()) {
+						return false;
+					} else {
+						return true;
+					}
+				} else {
+					return false;
+				}
 
+			default:
+				return false;
+		}
 	}
 	
 	public boolean checkIfAbove(int row) {
