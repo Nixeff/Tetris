@@ -16,7 +16,7 @@ public class Player extends JComponent{
     public Player() {
         this.score = 0;
         this.highScore = 0;
-        this.setPreferredSize(new Dimension(100, 200));
+        this.setPreferredSize(new Dimension(100, 50));
         this.setLayout(new FlowLayout());
         lable = new JLabel();
         lable.setText("0000");

@@ -23,6 +23,7 @@ public class Gameboard extends JPanel implements Runnable{
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
 	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // int cant be used and Integer is the same apperently? idk
 	ArrayList<String> bag = new ArrayList<>();
+	ArrayList<String> nextBag = new ArrayList<>();
 	Tetromino activeTetromino;
 	ArrayList<Block> placedBlocks = new ArrayList<Block>();
 	
@@ -47,6 +48,7 @@ public class Gameboard extends JPanel implements Runnable{
 		this.setPreferredSize(new Dimension(300, 700));
 		setLayout(null);
 		new Thread(this).start();
+		refillBag();
 	}
 	
 	public void spawnRandomTetromino() {
@@ -98,9 +100,18 @@ public class Gameboard extends JPanel implements Runnable{
 	}
 	
     private void refillBag() {
-        String[] allTypes = {"L", "T", "RL", "I", "O", "S", "Z"};
-        Collections.addAll(bag, allTypes);
-        Collections.shuffle(bag);
+    	String[] allTypes = {"L", "T", "RL", "I", "O", "S", "Z"};
+    	if(bag.isEmpty()||nextBag.isEmpty()) {
+            Collections.addAll(bag, allTypes);
+            Collections.shuffle(bag);
+            Collections.addAll(nextBag, allTypes);
+            Collections.shuffle(nextBag);
+    	} else {
+    		bag = nextBag;
+    		Collections.addAll(nextBag, allTypes);
+            Collections.shuffle(nextBag);
+    	}
+        
     }
 	
 	public void isRowBlocked(int row) {
