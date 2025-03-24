@@ -18,29 +18,31 @@ public abstract class Tetromino  {
 	}
 	
 	public void moveSideways(int direction) {
-		if(direction == 0) {
-			boolean move = true;
-			for(Block block: bodyPieces) {
-				if(block.getGridX()-1<0) {
-					move = false;
-				}
-			}
-			if(move) {
+		if(isMoving) {
+			if(direction == 0) {
+				boolean move = true;
 				for(Block block: bodyPieces) {
-					block.moveSideways(-1);
+					if(!block.checkSides(0)) {
+						move = false;
+					}
 				}
-			}
+				if(move) {
+					for(Block block: bodyPieces) {
+						block.moveSideways(-1);
+					}
+				}
 
-		}else {
-			boolean move = true;
-			for(Block block: bodyPieces) {
-				if(block.getGridX()+1>9) {
-					move = false;
-				}
-			}
-			if(move) {
+			}else {
+				boolean move = true;
 				for(Block block: bodyPieces) {
-					block.moveSideways(1);
+					if(!block.checkSides(1)) {
+						move = false;
+					}
+				}
+				if(move) {
+					for(Block block: bodyPieces) {
+						block.moveSideways(1);
+					}
 				}
 			}
 		}

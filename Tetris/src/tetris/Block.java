@@ -117,7 +117,39 @@ public class Block extends JPanel {
 		} else {
 			tetromino.setMoving(false);
 		}
+	}
+	
+	/**
+	 * @param direction		Increments of 10. Positive right, Negative left
+	 */
+	public boolean checkSides(int direction) {
+		switch(direction) {
+			case 0:
+				if(gridX-1>-1) {
+					GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY).get(gridX-1);
+					if(gridSquareBelow.isBlocked()) {
+						return false;
+					} else {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			case 1:
+				if(gridX+1<10) {
+					GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY).get(gridX+1);
+					if(gridSquareBelow.isBlocked()) {
+						return false;
+					} else {
+						return true;
+					}
+				} else {
+					return false;
+				}
 
+			default:
+				return false;
+		}
 	}
 	
 	public boolean checkIfAbove(int row) {
