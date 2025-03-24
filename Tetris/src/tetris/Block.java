@@ -84,7 +84,6 @@ public class Block extends JPanel {
 	public void moveDown() {
 		y += 30;
 		gridY += 1;
-		
 	}
 	
 	public void blockGrid() {
@@ -96,6 +95,18 @@ public class Block extends JPanel {
 		grid.get(gridY).get(gridX).setBlocked(false);
 	}
 	
+	public int checkHighestYInXCollum() {
+		int highestY = 22;
+		for(ArrayList<GridBlock> yAxis: gameBoard.grid) {
+			for(GridBlock gridSquare: yAxis) {
+				if(gridSquare.getGridX() == this.gridX && gridSquare.getGridY()< highestY && gridSquare.getGridY()> this.gridY && gridSquare.isBlocked()) {
+					highestY = gridSquare.getGridY();
+					System.out.println(highestY);
+				}
+			}
+		}
+		return highestY;
+	}
 	
 	/**
 	 * @param direction		Increments of 10. Positive right, Negative left
