@@ -7,6 +7,7 @@ import tetris.Tetromino;
 
 public class TShape extends Tetromino {
     public TShape(Gameboard gb) {
+    	this.gameboard = gb;
         color = Color.magenta;
 
         bodyPieces.add(new Block(gb, this, 5, 1));

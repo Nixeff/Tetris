@@ -19,11 +19,12 @@ import tetris.Tetrominos.ZShape;
 
 public class Gameboard extends JPanel implements Runnable{
 	
-	ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
+	//ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
 	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // int cant be used and Integer is the same apperently? idk
 	ArrayList<String> bag = new ArrayList<>();
 	Tetromino activeTetromino;
+	ArrayList<Block> placedBlocks = new ArrayList<Block>();
 	
 	Game game;
 	
@@ -85,8 +86,6 @@ public class Gameboard extends JPanel implements Runnable{
 	    }
 
 	    try {
-	        
-	        Tetrominos.add(temp);
 	        game.setActiveTetromino(temp);
 	        activeTetromino = temp;
 	        
@@ -136,32 +135,21 @@ public class Gameboard extends JPanel implements Runnable{
 	
 	public void deleteRow(int row) {
 		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
-		for(Tetromino shape : Tetrominos) {
-			for(Block bodyPart : shape.getBodyPieces()) {
-				if(bodyPart.getGridY() == row) {
-					System.out.println("Adding "+bodyPart.getGridX()+ " "+bodyPart.getGridY());
-					markedForDeletion.add(bodyPart);
-				}
+		for(Block block : placedBlocks) {
+			if(block.getGridY() == row) {
+				System.out.println("Adding "+block.getGridX()+ " "+block.getGridY());
+				markedForDeletion.add(block);
 			}
 		}
 		for(Block bodyPart: markedForDeletion) {
 			bodyPart.removeSelf();
 		}
-		for(Tetromino shape : Tetrominos) {
-			boolean moveIt = true;
-			for(Block bodyPart : shape.getBodyPieces()) {
-				if(!bodyPart.checkIfAbove(row)) {
-					moveIt = false;
-				}
-			}
-			if(moveIt) {
-				for(Block bodyParts: shape.getBodyPieces()) {
-					bodyParts.unBlockGrid();
-				}
-				shape.moveDown();
-				for(Block bodyParts: shape.getBodyPieces()) {
-					bodyParts.blockGrid();
-				}
+
+		for(Block block : placedBlocks) {
+			if(block.checkIfAbove(row)) {
+				block.unBlockGrid();
+				block.moveDown();
+				block.blockGrid();
 			}
 		}
 	}
@@ -170,9 +158,6 @@ public class Gameboard extends JPanel implements Runnable{
 		return grid;
 	}
 
-	public ArrayList<Tetromino> getTetrominos() {
-		return Tetrominos;
-	}
 
 	public ArrayList<Integer> getMarkedRowsForDeletion() {
 		return markedRowsForDeletion;
@@ -182,6 +167,10 @@ public class Gameboard extends JPanel implements Runnable{
 		this.markedRowsForDeletion = markedRowsForDeletion;
 	}
 
+	public void addPlacedBlocks(Block block) {
+		placedBlocks.add(block);
+	}
+	
 	@Override
 	public void run() {
 		while(game.isRunning()) {

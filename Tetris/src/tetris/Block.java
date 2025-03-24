@@ -76,10 +76,7 @@ public class Block extends JPanel {
 
 	
 	public void removeSelf() {
-		tetromino.getBodyPieces().remove(this);
-		if(tetromino.getBodyPieces().size() == 0) {
-			gameBoard.getTetrominos().remove(tetromino);
-		}
+		gameBoard.placedBlocks.remove(this);
 		gameBoard.remove(this);
 		unBlockGrid();
 	}
@@ -112,10 +109,10 @@ public class Block extends JPanel {
 		if(gridY+1<22) {
 			GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
 			if(gridSquareBelow.isBlocked()) {
-				tetromino.setMoving(false);
+				tetromino.stopMoving();
 			}
 		} else {
-			tetromino.setMoving(false);
+			tetromino.stopMoving();
 		}
 	}
 	

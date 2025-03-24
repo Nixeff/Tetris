@@ -7,6 +7,7 @@ import tetris.Tetromino;
 
 public class ZShape extends Tetromino {
     public ZShape(Gameboard gb) {
+    	this.gameboard = gb;
         color = Color.green;
 
         bodyPieces.add(new Block(gb, this, 5, 0));
