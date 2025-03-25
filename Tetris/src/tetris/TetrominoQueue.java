@@ -21,7 +21,6 @@ public class TetrominoQueue extends JComponent{
 	ArrayList<String> display;
 	ArrayList<Tetromino> tetrominoDisplay;
 	Gameboard gb;
-	JLabel label;
 	public TetrominoQueue(Gameboard gb) {
 		this.bag = gb.bag;
 		this.nextBag = gb.nextBag;
@@ -29,15 +28,9 @@ public class TetrominoQueue extends JComponent{
         this.setPreferredSize(new Dimension(100, 600));
         this.setLayout(null);
         
-        label = new JLabel();
-        label.setText("0000");
-        
-        this.add(label);
 	}
 	
 	public void update() {
-		//repaint();
-		String text = "";
 		display = new ArrayList<String>();
 		if(tetrominoDisplay != null) {
 			ArrayList<Tetromino> tempList = new ArrayList<>(tetrominoDisplay);
@@ -49,21 +42,16 @@ public class TetrominoQueue extends JComponent{
 		}
 		if(bag.size()<3) {
 			for(String nextTetromino: bag) {
-				text = text+", "+nextTetromino;
 				display.add(nextTetromino);
 			}
 			for(int i = 0; i<3-bag.size();i++) {
-				text = text+", "+nextBag.get(i);
 				display.add(nextBag.get(i));
 			}
 		} else {
 			for(int i = 0; i<3;i++) {
-				text = text+", "+bag.get(i);
 				display.add(bag.get(i));
 			}
 		}
-		label.setText(text);
-		System.out.println(text);
 		displayTetromino();
 	}
 	
