@@ -99,6 +99,30 @@ public class Gameboard extends JPanel implements Runnable{
 	    }
 	}
 	
+	public void holdTetromino() {
+		Tetromino tempTetromino = activeTetromino;
+		Tetromino heldTetromino = game.getHeldTetromino().getHeldTetromino();
+		if(heldTetromino == null) {
+			game.getHeldTetromino().setHeldTetromino(activeTetromino);
+			for(Block block: activeTetromino.getBodyPieces()) {
+				block.removeSelfHold();
+			}
+			spawnRandomTetromino();
+		} else {
+			for(Block block: activeTetromino.getBodyPieces()) {
+				block.removeSelfHold();
+			}
+			activeTetromino = heldTetromino;
+			game.getHeldTetromino().setHeldTetromino(tempTetromino);
+		}
+        game.setActiveTetromino(activeTetromino);
+        
+        for (Block block : activeTetromino.getBodyPieces()) {
+        	block.reset();
+            this.add(block);
+        }
+	}
+	
     private void refillBag() {
     	String[] allTypes = {"L", "T", "RL", "I", "O", "S", "Z"};
     	if(bag.isEmpty()||nextBag.isEmpty()) {
@@ -148,7 +172,7 @@ public class Gameboard extends JPanel implements Runnable{
 		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
 		for(Block block : placedBlocks) {
 			if(block.getGridY() == row) {
-				System.out.println("Adding "+block.getGridX()+ " "+block.getGridY());
+				//System.out.println("Adding "+block.getGridX()+ " "+block.getGridY());
 				markedForDeletion.add(block);
 			}
 		}
@@ -158,11 +182,13 @@ public class Gameboard extends JPanel implements Runnable{
 
 		for(Block block : placedBlocks) {
 			if(block.checkIfAbove(row)) {
+				System.out.println("Moving "+block.getGridX()+ " "+block.getGridY());
 				block.unBlockGrid();
 				block.moveDown();
 				block.blockGrid();
 			}
 		}
+		System.out.println("=============");
 	}
 	
 	public ArrayList<ArrayList<GridBlock>> getGrid() {

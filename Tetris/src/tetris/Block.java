@@ -13,6 +13,10 @@ public class Block extends JPanel {
 
     int x;
     int y;
+    
+    int originalGridX;
+    int originalGridY;
+
     Gameboard gameBoard;
     Tetromino tetromino;
 
@@ -21,10 +25,17 @@ public class Block extends JPanel {
         this.tetromino = tetromino;
         this.gridX = x;
         this.gridY = y;
+        this.originalGridX = gridX;
+        this.originalGridY = gridY;
         this.x = x * 30;
         this.y = y * 30;
 
         setBounds(this.x, this.y, 30, 30); // Set initial position
+    }
+    
+    public void reset() {
+    	setGridX(originalGridX);
+    	setGridY(originalGridY);
     }
 
     @Override
@@ -79,6 +90,10 @@ public class Block extends JPanel {
 		gameBoard.placedBlocks.remove(this);
 		gameBoard.remove(this);
 		unBlockGrid();
+	}
+	
+	public void removeSelfHold() {
+		gameBoard.remove(this);
 	}
 	
 	public void removeSelf(Tetromino tetromino, TetrominoQueue que) {

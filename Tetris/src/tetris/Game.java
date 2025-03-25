@@ -12,6 +12,8 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private static Player player;
     private static TetrominoQueue tetrominoQueue;
     private static RightSideFrame rightSideFrame;
+    private static HeldTetromino heldTetromino;
+    private static LeftSideFrame leftSideFrame;
     private Tetromino activeTetromino;
     private Random random = new Random();
     private boolean running = true;
@@ -22,6 +24,8 @@ public class Game extends JPanel implements Runnable, KeyListener {
         gameboard = new Gameboard(player, this);
         tetrominoQueue = new TetrominoQueue(gameboard);
         rightSideFrame = new RightSideFrame(player,tetrominoQueue);
+        heldTetromino = new HeldTetromino();
+        leftSideFrame = new LeftSideFrame(heldTetromino);
         
         setPreferredSize(new Dimension(600, 1200));
         
@@ -40,6 +44,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
         frame.add(game);
         frame.add(gameboard, BorderLayout.CENTER);  // Game in center
         frame.add(rightSideFrame, BorderLayout.EAST);       // Score on right
+        frame.add(leftSideFrame, BorderLayout.WEST);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -56,7 +61,11 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
 
     
-    public static void main(String[] args) {
+    public static HeldTetromino getHeldTetromino() {
+		return heldTetromino;
+	}
+
+	public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             start();
         });
@@ -123,6 +132,11 @@ public class Game extends JPanel implements Runnable, KeyListener {
             break;
         case KeyEvent.VK_SPACE:
         	activeTetromino.instantPlace();
+            break;
+        case KeyEvent.VK_C:
+        	repaint();
+        	gameboard.holdTetromino();
+        	repaint();
             break;
     }
     }

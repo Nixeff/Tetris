@@ -34,6 +34,13 @@ public abstract class Tetromino  {
 		here.remove(this);
 	}
 	
+	public void gameboardRemoveSelf() {
+		ArrayList<Block> tempList = new ArrayList<>(bodyPieces);
+		for(Block bodyPiece: tempList) {
+			bodyPiece.removeSelf();
+		}
+	}
+	
 	public void moveSideways(int direction) {
 		if(isMoving) {
 			if(direction == 0) {
