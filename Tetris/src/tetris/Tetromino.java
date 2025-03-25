@@ -74,9 +74,18 @@ public abstract class Tetromino  {
 	
 	public void rotate() {
 	    if (bodyPieces.isEmpty()) return; // FAILSAFE (in case you somehow dont have a block to rotate)
+	    
+	    if (this instanceof tetris.Tetrominos.OShape) {
+	        return;
+	    }
 
 	    //use the first block as the pivot/rotate point for rotation (+ get X, Y cords)
-	    Block pivot = bodyPieces.get(0);
+	    Block pivot;
+	    if (this instanceof tetris.Tetrominos.IShape) {
+	        pivot = bodyPieces.get(1);
+	    } else {
+	        pivot = bodyPieces.get(0);
+	    }
 	    int pivotX = pivot.getGridX();
 	    int pivotY = pivot.getGridY();
 
@@ -116,7 +125,7 @@ public abstract class Tetromino  {
 	        int y = pos[1];
 	        
 	        //if rotation is out of bounds (of the grid) return false
-	        if (x < 0 || x >= 10 || y >= 22) {
+	        if (x < 0 || x >= 10 || y >= 22 || y < 0) {
 	            return false;
 	        }
 	        //if rotation would rotate inside other block return false
