@@ -126,9 +126,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
             gameSpeed = 50;
             break;
         case KeyEvent.VK_UP:
-        	repaint();
         	activeTetromino.rotate();
-        	repaint();
             break;
         case KeyEvent.VK_SPACE:
         	activeTetromino.instantPlace();
