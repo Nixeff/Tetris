@@ -81,15 +81,13 @@ public class Game extends JPanel implements Runnable, KeyListener {
 			activeTetromino = gameboard.spawnRandomTetromino();
 			tetrominoQueue.update();
 			
-			Tetromino currentTetromino = activeTetromino; //Its another coconut...
-			
 			System.out.println(Thread.currentThread().getName());
 			
 			System.out.println("Spawned: " + activeTetromino);
-			System.out.println("Still moving? " + currentTetromino.isMoving());
+			System.out.println("Still moving? " + activeTetromino.isMoving());
 			
-			if(currentTetromino != null) {
-				while(currentTetromino.isMoving && running) {
+			if(activeTetromino != null) {
+				while(activeTetromino.isMoving && running) {
 					// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
 					for(int i = 0; i<gameboard.getGrid().size(); i++) {
 						gameboard.isRowBlocked(i);
