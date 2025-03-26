@@ -10,7 +10,6 @@ public abstract class Tetromino  {
 	protected Gameboard gameboard;
 	boolean isMoving = true;
 	
-	
 	public void moveDown() {
 		for(Block bodyPiece: bodyPieces) {
 			bodyPiece.moveDown();
