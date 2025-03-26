@@ -24,8 +24,9 @@ public class Gameboard extends JPanel implements Runnable{
 	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // int cant be used and Integer is the same apperently? idk
 	ArrayList<String> bag = new ArrayList<>();
 	ArrayList<String> nextBag = new ArrayList<>();
-	Tetromino activeTetromino;
 	ArrayList<Block> placedBlocks = new ArrayList<Block>();
+	Tetromino activeTetromino;
+	
 	
 	Game game;
 	
@@ -51,7 +52,7 @@ public class Gameboard extends JPanel implements Runnable{
 		refillBag();
 	}
 	
-	public void spawnRandomTetromino() {
+	public Tetromino spawnRandomTetromino() {
         if (bag.isEmpty()) {
             refillBag();
         }
@@ -84,19 +85,20 @@ public class Gameboard extends JPanel implements Runnable{
 	            break;
 	        default:
 	            System.out.println("lul");
-	            return;
+	            return null;
 	    }
 
 	    try {
-	        game.setActiveTetromino(temp);
 	        activeTetromino = temp;
-	        
+	        checkSpawn();
 	        for (Block block : temp.getBodyPieces()) {
 	            this.add(block);
 	        }
+	        
 	    } catch (Exception e) {
 	        System.out.println("lul: " + e.getMessage());
 	    }
+		return temp;
 	}
 	
 	public void holdTetromino() {
@@ -152,6 +154,19 @@ public class Gameboard extends JPanel implements Runnable{
 		}
 	}
 	
+	private void checkSpawn() {
+		boolean shouldDie = false;
+		for(Block block: activeTetromino.getBodyPieces()) {
+			if(block.isBlocked()) {
+				shouldDie = true;
+			}
+		}
+		if(shouldDie) {
+			game.death();
+			System.out.println("dIE");
+		}
+	}
+	
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -170,6 +185,8 @@ public class Gameboard extends JPanel implements Runnable{
 	
 	public void deleteRow(int row) throws InterruptedException {
 		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
+		
+		System.out.println(Thread.currentThread().getName());
 		for(Block block : placedBlocks) {
 			if(block.getGridY() == row) {
 				//System.out.println("Adding "+block.getGridX()+ " "+block.getGridY());
@@ -211,10 +228,10 @@ public class Gameboard extends JPanel implements Runnable{
 		placedBlocks.add(block);
 	}
 	
+	
 	@Override
 	public void run() {
 		while(game.isRunning()) {
-			System.out.println("here");
 			if(activeTetromino != null) {
 				while(activeTetromino.isMoving()) {
 					activeTetromino.checkBelow();
@@ -228,12 +245,14 @@ public class Gameboard extends JPanel implements Runnable{
 						e.printStackTrace();
 					}
 				}
-
+			}
+			// This is ze coconut 
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
 			}
 		}
-
-
-		
 	}
 
 	

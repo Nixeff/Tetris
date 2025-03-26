@@ -20,19 +20,27 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private int gameSpeed = 1000;
 
     public Game() {
-        player = new Player();
-        gameboard = new Gameboard(player, this);
-        tetrominoQueue = new TetrominoQueue(gameboard);
-        rightSideFrame = new RightSideFrame(player,tetrominoQueue);
-        heldTetromino = new HeldTetromino();
-        leftSideFrame = new LeftSideFrame(heldTetromino);
-        
+       
+    	setupUI();
         setPreferredSize(new Dimension(600, 1200));
         
         setFocusable(true);
         addKeyListener(this);
+        
+        add(gameboard, BorderLayout.CENTER);  // Game in center
+        add(rightSideFrame, BorderLayout.EAST);       // Score on right
+        add(leftSideFrame, BorderLayout.WEST);
 
         new Thread(this).start();
+    }
+    
+    public void setupUI() {
+    	 player = new Player();
+         gameboard = new Gameboard(player, this);
+         tetrominoQueue = new TetrominoQueue(gameboard);
+         rightSideFrame = new RightSideFrame(player,tetrominoQueue);
+         heldTetromino = new HeldTetromino();
+         leftSideFrame = new LeftSideFrame(heldTetromino);
     }
 
     public static void start() {
@@ -42,14 +50,10 @@ public class Game extends JPanel implements Runnable, KeyListener {
 
         Game game = new Game();
         frame.add(game);
-        frame.add(gameboard, BorderLayout.CENTER);  // Game in center
-        frame.add(rightSideFrame, BorderLayout.EAST);       // Score on right
-        frame.add(leftSideFrame, BorderLayout.WEST);
+
         frame.pack();
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-
-        
+        frame.setVisible(true); 
     }
 
 
@@ -66,48 +70,51 @@ public class Game extends JPanel implements Runnable, KeyListener {
 	}
 
 	public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            start();
-        });
+        
+        start();
     }
     
 	@Override
 	public void run() {
 		while(running) {
-			System.out.println("New tetromino");
-			gameboard.spawnRandomTetromino();
+
+			activeTetromino = gameboard.spawnRandomTetromino();
 			tetrominoQueue.update();
-			try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			
+			Tetromino currentTetromino = activeTetromino; //Its another coconut...
+			
+			System.out.println(Thread.currentThread().getName());
+			
+			System.out.println("Spawned: " + activeTetromino);
+			System.out.println("Still moving? " + currentTetromino.isMoving());
+			
+			if(currentTetromino != null) {
+				while(currentTetromino.isMoving && running) {
+					// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
+					for(int i = 0; i<gameboard.getGrid().size(); i++) {
+						gameboard.isRowBlocked(i);
+						repaint();
+					}
+					// Removes all the rows that are blocked highest up to lowest first
+					if(gameboard.getMarkedRowsForDeletion().size() > 0) {
+						player.addScore(gameboard.getMarkedRowsForDeletion().size());
+						for (int row : gameboard.getMarkedRowsForDeletion()) {
+							try {
+								gameboard.deleteRow(row);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						gameboard.setMarkedRowsForDeletion(new ArrayList<Integer>());
+					}
+					
+					gameboard.repaint();
+					rightSideFrame.repaint();
+					
+				}
 			}
 			
-			while(activeTetromino.isMoving) {
-				// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
-				for(int i = 0; i<gameboard.getGrid().size(); i++) {
-					gameboard.isRowBlocked(i);
-					repaint();
-				}
-				// Removes all the rows that are blocked highest up to lowest first
-				if(gameboard.getMarkedRowsForDeletion().size() > 0) {
-					player.addScore(gameboard.getMarkedRowsForDeletion().size());
-					for (int row : gameboard.getMarkedRowsForDeletion()) {
-						try {
-							gameboard.deleteRow(row);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					gameboard.setMarkedRowsForDeletion(new ArrayList<Integer>());
-				}
-				
-				gameboard.repaint();
-				rightSideFrame.repaint();
-				
-			}
 		}
 	}
 
@@ -142,8 +149,46 @@ public class Game extends JPanel implements Runnable, KeyListener {
         	gameboard.holdTetromino();
         	repaint();
             break;
+        case KeyEvent.VK_R:
+        	restart();
+            break;
     }
     }
+
+    private void restart() {
+        death();  // Stop the game loop
+        removeAll(); // Remove any game elements from this JPanel
+        this.remove(rightSideFrame);
+        this.remove(gameboard);
+        this.remove(leftSideFrame);
+        
+        
+        // Reset key state
+        activeTetromino = null;
+        gameSpeed = 1000;
+        running = true;
+        
+        // Reinitialize the game components
+        setupUI();
+
+        //activeTetromino = gameboard.spawnRandomTetromino();
+       
+        // Re-attach new components to layout if needed
+        add(gameboard, BorderLayout.CENTER);  // Game in center
+        add(rightSideFrame, BorderLayout.EAST);       // Score on right
+        add(leftSideFrame, BorderLayout.WEST);
+
+        revalidate(); // Force layout refresh
+        repaint();    // Refresh graphics
+
+        
+        new Thread(this).start();  // Start the game loop again
+    }
+	
+	public void death() {
+		Thread.currentThread().interrupt();
+		running = false;
+	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {

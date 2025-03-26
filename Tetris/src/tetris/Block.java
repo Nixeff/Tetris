@@ -187,5 +187,15 @@ public class Block extends JPanel {
 			return false;
 		}
 	}
+
+	public boolean isBlocked() {
+		GridBlock gridSquare = gameBoard.getGrid().get(gridY).get(gridX);
+		if(gridSquare.isBlocked()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 	
 }
