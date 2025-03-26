@@ -19,7 +19,7 @@ public class Player extends JComponent{
         this.setPreferredSize(new Dimension(100, 50));
         this.setLayout(new FlowLayout());
         lable = new JLabel();
-        lable.setText("0000");
+        lable.setText("000");
         
         this.add(lable);
     }
@@ -51,6 +51,7 @@ public class Player extends JComponent{
 
     public void resetScore() {
         score = 0;
+        lable.setText("000");
     }
 
     public int getScore() {

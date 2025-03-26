@@ -20,6 +20,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private int gameSpeed = 1000;
 
     public Game() {
+    	player = new Player();
     	setupUI();
         setPreferredSize(new Dimension(600, 700));
         
@@ -35,7 +36,6 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
     
     public void setupUI() {
-    	 player = new Player();
          gameboard = new Gameboard(player, this);
          tetrominoQueue = new TetrominoQueue(gameboard);
          rightSideFrame = new RightSideFrame(player,tetrominoQueue);
@@ -147,12 +147,10 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private void restart() {
         death();  // Stop the game loop
         removeAll(); // Remove any game elements from this JPanel
-        this.remove(rightSideFrame);
-        this.remove(gameboard);
-        this.remove(leftSideFrame);
         
         // Reset key state
         activeTetromino = null;
+        player.resetScore();
         gameSpeed = 1000;
         running = true;
         
@@ -169,8 +167,14 @@ public class Game extends JPanel implements Runnable, KeyListener {
     }
 	
 	public void death() {
-		Thread.currentThread().interrupt();
+		
+		removeAll(); // Remove any game elements from this JPanel
+        add(new RestartFrame(player), BorderLayout.CENTER);
+        revalidate();
+        javax.swing.SwingUtilities.windowForComponent(this).repaint();
+        Thread.currentThread().interrupt();
 		running = false;
+        
 	}
 
 	@Override
