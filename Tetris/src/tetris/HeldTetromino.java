@@ -40,7 +40,6 @@ public class HeldTetromino extends JComponent{
     	}
     	heldTetromino.moveDown();
     	heldTetromino.moveDown();
-	    repaint();
 	}
 	
 	

@@ -1,11 +1,10 @@
 package tetris;
 
 import java.awt.Dimension;
-import java.awt.FlowLayout;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 
 import tetris.Tetrominos.IShape;
 import tetris.Tetrominos.LShape;
@@ -19,7 +18,7 @@ public class TetrominoQueue extends JComponent{
 	ArrayList<String> bag;
 	ArrayList<String> nextBag;
 	ArrayList<String> display;
-	ArrayList<Tetromino> tetrominoDisplay;
+	ArrayList<Tetromino> tetrominoDisplay = new ArrayList<>();
 	Gameboard gb;
 	public TetrominoQueue(Gameboard gb) {
 		this.bag = gb.bag;
@@ -31,7 +30,15 @@ public class TetrominoQueue extends JComponent{
 	}
 	
 	public void update() {
+		//this.removeAll();
 		display = new ArrayList<String>();
+		/*
+	    if(tetrominoDisplay != null) {
+	        tetrominoDisplay.clear(); // Clear the list instead of creating a new one
+	    } else {
+	        tetrominoDisplay = new ArrayList<Tetromino>();
+	    }
+		*/
 		if(tetrominoDisplay != null) {
 			ArrayList<Tetromino> tempList = new ArrayList<>(tetrominoDisplay);
 			for(Tetromino tetromino: tempList) {
@@ -52,7 +59,11 @@ public class TetrominoQueue extends JComponent{
 				display.add(bag.get(i));
 			}
 		}
+
 		displayTetromino();
+		
+		revalidate();
+
 	}
 	
 	private void displayTetromino() {
@@ -86,9 +97,7 @@ public class TetrominoQueue extends JComponent{
 	    	}
 	    	try {
 	    		tetrominoDisplay.add(temp);
-		        for (Block block : temp.getBodyPieces()) {
-		            this.add(block);
-		        }
+
 		    } catch (Exception e) {
 		        System.out.println("lul: " + e.getMessage());
 		    }
@@ -103,9 +112,13 @@ public class TetrominoQueue extends JComponent{
 	    		tetrominoDisplay.get(i).moveDown();
 	    		tetrominoDisplay.get(i).moveDown();
 	    	}
+	    	
+	        for (Tetromino tetromino : tetrominoDisplay) {
+	        	for (Block block : tetromino.getBodyPieces()) {
+		            this.add(block);
+		        }
+	        }
 	    }
-	    
-
 	    
 	}
 }

@@ -26,6 +26,7 @@ public abstract class Tetromino  {
 	}
 	
 	public void displayRemoveSelf(ArrayList<Tetromino> here, TetrominoQueue que) {
+		System.out.println("displayRemovoe");
 		ArrayList<Block> tempList = new ArrayList<>(bodyPieces);
 		for(Block bodyPiece: tempList) {
 			bodyPiece.removeSelf(this,que);
@@ -110,10 +111,6 @@ public abstract class Tetromino  {
 	            bodyPieces.get(i).setGridX(newPositions.get(i)[0]);
 	            bodyPieces.get(i).setGridY(newPositions.get(i)[1]);
 	        }
-	    }
-
-	    if (gameboard != null) {
-	        gameboard.repaint();
 	    }
 	}
 

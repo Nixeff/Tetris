@@ -99,11 +99,12 @@ public class Block extends JPanel {
 	public void removeSelf(Tetromino tetromino, TetrominoQueue que) {
 		tetromino.bodyPieces.remove(this);
 		que.remove(this);
+		System.out.println("block remove");
 	}
 	
 	public void moveDown() {
-		y += 30;
-		gridY += 1;
+		setGridY(getGridY()+1);
+		
 	}
 	
 	public void blockGrid() {
@@ -134,6 +135,8 @@ public class Block extends JPanel {
 	public void moveSideways(int direction) {
 		gridX += direction;
 		x = gridX*30;
+		setBounds(x, y, 30, 30); // move component
+	    
 	}
 	
 	public void checkBelow() {
