@@ -168,7 +168,7 @@ public class Gameboard extends JPanel implements Runnable{
         }
     }
 	
-	public void deleteRow(int row) {
+	public void deleteRow(int row) throws InterruptedException {
 		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
 		for(Block block : placedBlocks) {
 			if(block.getGridY() == row) {
@@ -179,15 +179,18 @@ public class Gameboard extends JPanel implements Runnable{
 		for(Block bodyPart: markedForDeletion) {
 			bodyPart.removeSelf();
 		}
-
-		for(Block block : placedBlocks) {
-			if(block.checkIfAbove(row)) {
-				System.out.println("Moving "+block.getGridX()+ " "+block.getGridY());
-				block.unBlockGrid();
-				block.moveDown();
-				block.blockGrid();
+		for(int i = row; i>0; i--) {
+			for(Block block : placedBlocks) {
+				if(block.getGridY() == i) {
+					if(block.checkIfAbove(row)) {
+						block.unBlockGrid();
+						block.moveDown();
+						block.blockGrid();
+					}
+				}
 			}
 		}
+
 		System.out.println("=============");
 	}
 	
@@ -213,7 +216,6 @@ public class Gameboard extends JPanel implements Runnable{
 		while(game.isRunning()) {
 			System.out.println("here");
 			if(activeTetromino != null) {
-				
 				while(activeTetromino.isMoving()) {
 					activeTetromino.checkBelow();
 					if(activeTetromino.isMoving()) {

@@ -88,12 +88,18 @@ public class Game extends JPanel implements Runnable, KeyListener {
 				// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
 				for(int i = 0; i<gameboard.getGrid().size(); i++) {
 					gameboard.isRowBlocked(i);
+					repaint();
 				}
 				// Removes all the rows that are blocked highest up to lowest first
 				if(gameboard.getMarkedRowsForDeletion().size() > 0) {
 					player.addScore(gameboard.getMarkedRowsForDeletion().size());
 					for (int row : gameboard.getMarkedRowsForDeletion()) {
-						gameboard.deleteRow(row);
+						try {
+							gameboard.deleteRow(row);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					gameboard.setMarkedRowsForDeletion(new ArrayList<Integer>());
 				}
