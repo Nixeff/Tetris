@@ -20,12 +20,12 @@ public class Game extends JPanel implements Runnable, KeyListener {
     private int gameSpeed = 1000;
 
     public Game() {
-       
     	setupUI();
-        setPreferredSize(new Dimension(600, 1200));
+        setPreferredSize(new Dimension(600, 700));
         
         setFocusable(true);
         addKeyListener(this);
+        this.setLayout(new BorderLayout());
         
         add(gameboard, BorderLayout.CENTER);  // Game in center
         add(rightSideFrame, BorderLayout.EAST);       // Score on right
@@ -81,17 +81,11 @@ public class Game extends JPanel implements Runnable, KeyListener {
 			activeTetromino = gameboard.spawnRandomTetromino();
 			tetrominoQueue.update();
 			
-			System.out.println(Thread.currentThread().getName());
-			
-			System.out.println("Spawned: " + activeTetromino);
-			System.out.println("Still moving? " + activeTetromino.isMoving());
-			
 			if(activeTetromino != null) {
 				while(activeTetromino.isMoving && running) {
 					// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
 					for(int i = 0; i<gameboard.getGrid().size(); i++) {
 						gameboard.isRowBlocked(i);
-						repaint();
 					}
 					// Removes all the rows that are blocked highest up to lowest first
 					if(gameboard.getMarkedRowsForDeletion().size() > 0) {
@@ -106,9 +100,8 @@ public class Game extends JPanel implements Runnable, KeyListener {
 						}
 						gameboard.setMarkedRowsForDeletion(new ArrayList<Integer>());
 					}
+					javax.swing.SwingUtilities.windowForComponent(this).repaint();
 					
-					gameboard.repaint();
-					rightSideFrame.repaint();
 					
 				}
 			}
@@ -143,9 +136,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
         	activeTetromino.instantPlace();
             break;
         case KeyEvent.VK_C:
-        	repaint();
         	gameboard.holdTetromino();
-        	repaint();
             break;
         case KeyEvent.VK_R:
         	restart();
@@ -160,7 +151,6 @@ public class Game extends JPanel implements Runnable, KeyListener {
         this.remove(gameboard);
         this.remove(leftSideFrame);
         
-        
         // Reset key state
         activeTetromino = null;
         gameSpeed = 1000;
@@ -168,17 +158,12 @@ public class Game extends JPanel implements Runnable, KeyListener {
         
         // Reinitialize the game components
         setupUI();
-
-        //activeTetromino = gameboard.spawnRandomTetromino();
        
         // Re-attach new components to layout if needed
+        
         add(gameboard, BorderLayout.CENTER);  // Game in center
         add(rightSideFrame, BorderLayout.EAST);       // Score on right
         add(leftSideFrame, BorderLayout.WEST);
-
-        revalidate(); // Force layout refresh
-        repaint();    // Refresh graphics
-
         
         new Thread(this).start();  // Start the game loop again
     }
