@@ -15,14 +15,14 @@ import tetris.Tetrominos.TShape;
 import tetris.Tetrominos.ZShape;
 
 public class TetrominoQueue extends JComponent{
-	ArrayList<String> bag;
-	ArrayList<String> nextBag;
-	ArrayList<String> display;
-	ArrayList<Tetromino> tetrominoDisplay = new ArrayList<>();
-	Gameboard gb;
+	private ArrayList<String> bag;
+	private ArrayList<String> nextBag;
+	private ArrayList<String> display;
+	private ArrayList<Tetromino> tetrominoDisplay = new ArrayList<>();
+	private Gameboard gb;
 	public TetrominoQueue(Gameboard gb) {
-		this.bag = gb.bag;
-		this.nextBag = gb.nextBag;
+		this.bag = gb.getBag();
+		this.nextBag = gb.getNextBag();
 		this.gb = gb;
         this.setPreferredSize(new Dimension(100, 600));
         this.setLayout(null);
@@ -31,7 +31,8 @@ public class TetrominoQueue extends JComponent{
 	
 	public void update() {
 		display = new ArrayList<String>();
-		
+		bag = gb.getBag();
+		nextBag = gb.getNextBag();
 		if(tetrominoDisplay != null) {
 			ArrayList<Tetromino> tempList = new ArrayList<>(tetrominoDisplay);
 			for(Tetromino tetromino: tempList) {
@@ -41,6 +42,7 @@ public class TetrominoQueue extends JComponent{
 			tetrominoDisplay = new ArrayList<Tetromino>();
 		}
 		if(bag.size()<3) {
+			
 			for(String nextTetromino: bag) {
 				display.add(nextTetromino);
 			}

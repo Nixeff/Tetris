@@ -15,10 +15,16 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 public class RestartFrame extends JComponent{
-	JLabel hintText;
-	JLabel score;
-	JLabel highScore;
+	private JLabel hintText;
+	private JLabel score;
+	private JLabel highScore;
+	private Player player;
 	public RestartFrame(Player player) {
+		this.player = player;
+		setUpUi();
+    }
+	
+	private void setUpUi() {
         setLayout(new GridBagLayout()); 
 
         JPanel labelPanel = new JPanel();
@@ -47,5 +53,5 @@ public class RestartFrame extends JComponent{
         labelPanel.add(highScore);
 
         add(labelPanel);
-    }
+	}
 }

@@ -8,7 +8,7 @@ public abstract class Tetromino  {
 	protected ArrayList<Block> bodyPieces = new ArrayList<Block>();
 	protected Color color;
 	protected Gameboard gameboard;
-	boolean isMoving = true;
+	private boolean isMoving = true;
 	
 	public void moveDown() {
 		for(Block bodyPiece: bodyPieces) {
@@ -148,10 +148,6 @@ public abstract class Tetromino  {
 	    }
 	    return true;
 	}
-
-
-	
-
 
 	public ArrayList<Block> getBodyPieces() {
 		return bodyPieces;

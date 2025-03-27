@@ -8,17 +8,17 @@ import javax.swing.JPanel;
 
 public class Block extends JPanel {
 
-    int gridX;
-    int gridY;
+    private int gridX;
+    private int gridY;
 
-    int x;
-    int y;
+    private int x;
+    private int y;
     
-    int originalGridX;
-    int originalGridY;
+    private int originalGridX;
+    private int originalGridY;
 
-    Gameboard gameBoard;
-    Tetromino tetromino;
+    private Gameboard gameBoard;
+    private Tetromino tetromino;
 
     public Block(Gameboard gameBoard, Tetromino tetromino, int x, int y) {
         this.gameBoard = gameBoard;
@@ -85,7 +85,7 @@ public class Block extends JPanel {
     }
 	
 	public void removeSelf() {
-		gameBoard.placedBlocks.remove(this);
+		gameBoard.getPlacedBlocks().remove(this);
 		gameBoard.remove(this);
 		unBlockGrid();
 	}
@@ -198,6 +198,4 @@ public class Block extends JPanel {
 		}
 	}
 
-
-	
 }

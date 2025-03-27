@@ -96,7 +96,7 @@ public class Game extends JPanel implements Runnable, KeyListener {
 			tetrominoQueue.update();
 			
 			if(activeTetromino != null) {
-				while(activeTetromino.isMoving && running) {
+				while(activeTetromino.isMoving() && running) {
 					// Checks all rows if any are blocked and adds them to the markedRowsForDeletion
 					for(int i = 0; i<gameboard.getGrid().size(); i++) {
 						gameboard.isRowBlocked(i);

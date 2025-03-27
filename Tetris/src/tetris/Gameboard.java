@@ -18,14 +18,14 @@ import tetris.Tetrominos.TShape;
 import tetris.Tetrominos.ZShape;
 
 public class Gameboard extends JPanel implements Runnable{
-	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
-	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // INT can't be used and Integer is the same apparently? idk
-	ArrayList<String> bag = new ArrayList<>();
-	ArrayList<String> nextBag = new ArrayList<>();
-	ArrayList<Block> placedBlocks = new ArrayList<Block>();
-	Tetromino activeTetromino;
+	private ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
+	private ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // INT can't be used and Integer is the same apparently? idk
+	private ArrayList<String> bag = new ArrayList<>();
+	private ArrayList<String> nextBag = new ArrayList<>();
+	private ArrayList<Block> placedBlocks = new ArrayList<Block>();
+	private Tetromino activeTetromino;
 	
-	Game game;
+	private Game game;
 	
 	private Random random = new Random();
 	
@@ -212,6 +212,19 @@ public class Gameboard extends JPanel implements Runnable{
 		return grid;
 	}
 
+	
+
+	public ArrayList<String> getBag() {
+		return bag;
+	}
+
+	public ArrayList<String> getNextBag() {
+		return nextBag;
+	}
+
+	public ArrayList<Block> getPlacedBlocks() {
+		return placedBlocks;
+	}
 
 	public ArrayList<Integer> getMarkedRowsForDeletion() {
 		return markedRowsForDeletion;
