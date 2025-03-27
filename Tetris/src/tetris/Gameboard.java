@@ -134,7 +134,7 @@ public class Gameboard extends JPanel implements Runnable{
             Collections.addAll(nextBag, allTypes);
             Collections.shuffle(nextBag);
     	} else {
-    		bag = nextBag;
+    		Collections.addAll(bag, nextBag.toArray(new String[nextBag.size()]));
     		Collections.addAll(nextBag, allTypes);
             Collections.shuffle(nextBag);
     	}
