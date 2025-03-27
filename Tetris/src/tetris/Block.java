@@ -83,8 +83,6 @@ public class Block extends JPanel {
     public void setY(int y) {
         this.y = y;
     }
-
-
 	
 	public void removeSelf() {
 		gameBoard.placedBlocks.remove(this);
@@ -99,7 +97,6 @@ public class Block extends JPanel {
 	public void removeSelf(Tetromino tetromino, TetrominoQueue que) {
 		tetromino.bodyPieces.remove(this);
 		que.remove(this);
-		System.out.println("block remove");
 	}
 	
 	public void moveDown() {
@@ -107,38 +104,42 @@ public class Block extends JPanel {
 		
 	}
 	
+	/**
+	 * @param direction		Increments of 1. Positive right, Negative left
+	 */
+	public void moveSideways(int direction) {
+		setGridX(getGridX()+direction);   
+	}
+	
 	public void blockGrid() {
 		ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
 		grid.get(gridY).get(gridX).setBlocked(true);
 	}
+	
 	public void unBlockGrid() {
 		ArrayList<ArrayList<GridBlock>> grid = gameBoard.getGrid();
 		grid.get(gridY).get(gridX).setBlocked(false);
 	}
 	
-	public int checkHighestYInXCollum() {
-		int highestY = 22;
-		for(ArrayList<GridBlock> yAxis: gameBoard.grid) {
-			for(GridBlock gridSquare: yAxis) {
-				if(gridSquare.getGridX() == this.gridX && gridSquare.getGridY()< highestY && gridSquare.getGridY()> this.gridY && gridSquare.isBlocked()) {
-					highestY = gridSquare.getGridY();
-					System.out.println(highestY);
-				}
-			}
+	/** 
+	 * Checks if the grid square the block is on is blocked
+	 * 
+	 * @return
+	 */
+	public boolean isBlocked() {
+		GridBlock gridSquare = gameBoard.getGrid().get(gridY).get(gridX);
+		if(gridSquare.isBlocked()) {
+			return true;
+		} else {
+			return false;
 		}
-		return highestY;
+
 	}
 	
 	/**
-	 * @param direction		Increments of 10. Positive right, Negative left
+	 * Checks if the grid square below the block is blocked and if it is. It tells the tetromino its connected to
+	 * to stop moving. 
 	 */
-	public void moveSideways(int direction) {
-		gridX += direction;
-		x = gridX*30;
-		setBounds(x, y, 30, 30); // move component
-	    
-	}
-	
 	public void checkBelow() {
 		if(gridY+1<22) {
 			GridBlock gridSquareBelow = gameBoard.getGrid().get(gridY+1).get(gridX);
@@ -151,7 +152,7 @@ public class Block extends JPanel {
 	}
 	
 	/**
-	 * @param direction		Increments of 10. Positive right, Negative left
+	 * @param direction		Increments of 1. Positive right, Negative left
 	 */
 	public boolean checkSides(int direction) {
 		switch(direction) {
@@ -183,6 +184,12 @@ public class Block extends JPanel {
 		}
 	}
 	
+	/**
+	 * Checks if this is above (not on) the row
+	 * 
+	 * @param row	The row we check from
+	 * @return
+	 */
 	public boolean checkIfAbove(int row) {
 		if(gridY < row) {
 			return true;
@@ -191,14 +198,6 @@ public class Block extends JPanel {
 		}
 	}
 
-	public boolean isBlocked() {
-		GridBlock gridSquare = gameBoard.getGrid().get(gridY).get(gridX);
-		if(gridSquare.isBlocked()) {
-			return true;
-		} else {
-			return false;
-		}
 
-	}
 	
 }

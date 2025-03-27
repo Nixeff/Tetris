@@ -16,29 +16,8 @@ public abstract class Tetromino  {
 		}
 	}
 	
-	public void instantPlace() {
-		while(isMoving) {
-			checkBelow();
-			if(isMoving) {
-				moveDown();
-			}
-		}
-	}
-	
-	public void displayRemoveSelf(ArrayList<Tetromino> here, TetrominoQueue que) {
-		System.out.println("displayRemovoe");
-		ArrayList<Block> tempList = new ArrayList<>(bodyPieces);
-		for(Block bodyPiece: tempList) {
-			bodyPiece.removeSelf(this,que);
-		}
-		here.remove(this);
-	}
-	
-	public void gameboardRemoveSelf() {
-		ArrayList<Block> tempList = new ArrayList<>(bodyPieces);
-		for(Block bodyPiece: tempList) {
-			bodyPiece.removeSelf();
-		}
+	protected void generateBlocks() {
+		
 	}
 	
 	public void moveSideways(int direction) {
@@ -69,6 +48,44 @@ public abstract class Tetromino  {
 					}
 				}
 			}
+		}
+	}
+	
+	public void instantPlace() {
+		while(isMoving) {
+			checkBelow();
+			if(isMoving) {
+				moveDown();
+			}
+		}
+	}
+	
+	public void checkBelow() {
+		for(Block bodyPiece: bodyPieces) {
+			bodyPiece.checkBelow();
+		}
+	}
+	
+	public void displayRemoveSelf(ArrayList<Tetromino> here, TetrominoQueue que) {
+		ArrayList<Block> tempList = new ArrayList<>(bodyPieces);
+		for(Block bodyPiece: tempList) {
+			bodyPiece.removeSelf(this,que);
+		}
+		here.remove(this);
+	}
+	
+	public void gameboardRemoveSelf() {
+		ArrayList<Block> tempList = new ArrayList<>(bodyPieces);
+		for(Block bodyPiece: tempList) {
+			bodyPiece.removeSelf();
+		}
+	}
+	
+	public void stopMoving() {
+		this.isMoving = false;
+		for(Block block: bodyPieces) {
+			block.blockGrid();
+			gameboard.addPlacedBlocks(block);
 		}
 	}
 	
@@ -134,11 +151,7 @@ public abstract class Tetromino  {
 
 
 	
-	public void checkBelow() {
-		for(Block bodyPiece: bodyPieces) {
-			bodyPiece.checkBelow();
-		}
-	}
+
 
 	public ArrayList<Block> getBodyPieces() {
 		return bodyPieces;
@@ -147,14 +160,4 @@ public abstract class Tetromino  {
 	public boolean isMoving() {
 		return isMoving;
 	}
-
-	public void stopMoving() {
-		this.isMoving = false;
-		for(Block block: bodyPieces) {
-			block.blockGrid();
-			gameboard.addPlacedBlocks(block);
-		}
-	}
-	
-	
 }

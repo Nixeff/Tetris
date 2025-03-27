@@ -23,11 +23,6 @@ public class Player extends JComponent{
         
         this.add(lable);
     }
-    
-    @Override
-    protected void paintComponent(Graphics g) {
-    	
-    }
 
     public void addScore(int rowsCleared) {
         int points = calculatePoints(rowsCleared);

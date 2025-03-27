@@ -7,12 +7,17 @@ import tetris.Tetromino;
 
 public class LShape extends Tetromino {
     public LShape(Gameboard gb) {
-        color = Color.blue;
-        this.gameboard = gb;
-        bodyPieces.add(new Block(gb, this, 5, 2));
-        bodyPieces.add(new Block(gb, this, 5, 1));
-        bodyPieces.add(new Block(gb, this, 5, 0));
-        bodyPieces.add(new Block(gb, this, 6, 2));
+    	this.gameboard = gb;
+    	color = Color.blue;
+    	generateBlocks();
     }
+    
+    @Override
+	protected void generateBlocks() {
+        bodyPieces.add(new Block(gameboard, this, 5, 2));
+        bodyPieces.add(new Block(gameboard, this, 5, 1));
+        bodyPieces.add(new Block(gameboard, this, 5, 0));
+        bodyPieces.add(new Block(gameboard, this, 6, 2));
+	}
 }
 
