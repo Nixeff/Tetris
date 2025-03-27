@@ -14,10 +14,10 @@ public class LShape extends Tetromino {
     
     @Override
 	protected void generateBlocks() {
-        bodyPieces.add(new Block(gameboard, this, 5, 2));
         bodyPieces.add(new Block(gameboard, this, 5, 1));
-        bodyPieces.add(new Block(gameboard, this, 5, 0));
-        bodyPieces.add(new Block(gameboard, this, 6, 2));
+        bodyPieces.add(new Block(gameboard, this, 6, 1));
+        bodyPieces.add(new Block(gameboard, this, 6, 0));
+        bodyPieces.add(new Block(gameboard, this, 4, 1));
 	}
 }
 

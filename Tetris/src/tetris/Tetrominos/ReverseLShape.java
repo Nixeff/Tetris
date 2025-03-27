@@ -14,9 +14,9 @@ public class ReverseLShape extends Tetromino {
     
     @Override
 	protected void generateBlocks() {
-        bodyPieces.add(new Block(gameboard, this, 7, 1));
+        bodyPieces.add(new Block(gameboard, this, 5, 1));
+        bodyPieces.add(new Block(gameboard, this, 4, 1));
         bodyPieces.add(new Block(gameboard, this, 6, 1));
-        bodyPieces.add(new Block(gameboard, this, 8, 1));
-        bodyPieces.add(new Block(gameboard, this, 6, 0));
+        bodyPieces.add(new Block(gameboard, this, 4, 0));
 	}
 }
