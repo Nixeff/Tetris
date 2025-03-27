@@ -9,10 +9,14 @@ public class SShape extends Tetromino {
     public SShape(Gameboard gb) {
     	this.gameboard = gb;
         color = Color.red;
-
-        bodyPieces.add(new Block(gb, this, 5, 1));
-        bodyPieces.add(new Block(gb, this, 6, 1));
-        bodyPieces.add(new Block(gb, this, 4, 0));
-        bodyPieces.add(new Block(gb, this, 5, 0));
+        generateBlocks();
     }
+    
+    @Override
+	protected void generateBlocks() {
+        bodyPieces.add(new Block(gameboard, this, 5, 1));
+        bodyPieces.add(new Block(gameboard, this, 6, 1));
+        bodyPieces.add(new Block(gameboard, this, 4, 0));
+        bodyPieces.add(new Block(gameboard, this, 5, 0));
+	}
 }

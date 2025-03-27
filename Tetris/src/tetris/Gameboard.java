@@ -18,15 +18,12 @@ import tetris.Tetrominos.TShape;
 import tetris.Tetrominos.ZShape;
 
 public class Gameboard extends JPanel implements Runnable{
-	
-	//ArrayList<Tetromino> Tetrominos = new ArrayList<Tetromino>();
 	ArrayList<ArrayList<GridBlock>> grid = new ArrayList<ArrayList<GridBlock>>();
-	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // int cant be used and Integer is the same apperently? idk
+	ArrayList<Integer> markedRowsForDeletion = new ArrayList<Integer>(); // INT can't be used and Integer is the same apparently? idk
 	ArrayList<String> bag = new ArrayList<>();
 	ArrayList<String> nextBag = new ArrayList<>();
 	ArrayList<Block> placedBlocks = new ArrayList<Block>();
 	Tetromino activeTetromino;
-	
 	
 	Game game;
 	
@@ -52,6 +49,10 @@ public class Gameboard extends JPanel implements Runnable{
 		refillBag();
 	}
 	
+	/**
+	 * The order is predetermined by a bag so only after every tetromino is displayed once can each tetromino be displayed again.
+	 * @return
+	 */
 	public Tetromino spawnRandomTetromino() {
         if (bag.isEmpty()) {
             refillBag();
@@ -140,20 +141,10 @@ public class Gameboard extends JPanel implements Runnable{
         
     }
 	
-	public void isRowBlocked(int row) {
-		boolean isBlocked = true;
-		for(GridBlock gridSquare : grid.get(row)) {
-			if(!gridSquare.isBlocked()) {
-				isBlocked = false;
-			} else {
-				
-			}
-		}
-		if(isBlocked) {
-			markedRowsForDeletion.add(row);
-		}
-	}
-	
+
+	/**
+	 * Checks if the area where the activeTetromino is all ready has blocked grid squares. If so it triggers the death method in game
+	 */
 	private void checkSpawn() {
 		boolean shouldDie = false;
 		for(Block block: activeTetromino.getBodyPieces()) {
@@ -163,7 +154,6 @@ public class Gameboard extends JPanel implements Runnable{
 		}
 		if(shouldDie) {
 			game.death();
-			System.out.println("dIE");
 		}
 	}
 	
@@ -182,14 +172,23 @@ public class Gameboard extends JPanel implements Runnable{
             }
         }
     }
+    
+	public void isRowBlocked(int row) {
+		boolean isBlocked = true;
+		for(GridBlock gridSquare : grid.get(row)) {
+			if(!gridSquare.isBlocked()) {
+				isBlocked = false;
+			}
+		}
+		if(isBlocked) {
+			markedRowsForDeletion.add(row);
+		}
+	}
 	
-	public void deleteRow(int row) throws InterruptedException {
+	public void deleteRow(int row) {
 		ArrayList<Block> markedForDeletion = new ArrayList<Block>();
-		
-		System.out.println(Thread.currentThread().getName());
 		for(Block block : placedBlocks) {
 			if(block.getGridY() == row) {
-				//System.out.println("Adding "+block.getGridX()+ " "+block.getGridY());
 				markedForDeletion.add(block);
 			}
 		}
@@ -207,8 +206,6 @@ public class Gameboard extends JPanel implements Runnable{
 				}
 			}
 		}
-
-		System.out.println("=============");
 	}
 	
 	public ArrayList<ArrayList<GridBlock>> getGrid() {
@@ -241,7 +238,6 @@ public class Gameboard extends JPanel implements Runnable{
 					try {
 						Thread.sleep(game.getGameSpeed());
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
@@ -254,11 +250,4 @@ public class Gameboard extends JPanel implements Runnable{
 			}
 		}
 	}
-
-	
-	
-	
-	
-	
-	
 }

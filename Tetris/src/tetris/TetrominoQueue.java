@@ -30,15 +30,8 @@ public class TetrominoQueue extends JComponent{
 	}
 	
 	public void update() {
-		//this.removeAll();
 		display = new ArrayList<String>();
-		/*
-	    if(tetrominoDisplay != null) {
-	        tetrominoDisplay.clear(); // Clear the list instead of creating a new one
-	    } else {
-	        tetrominoDisplay = new ArrayList<Tetromino>();
-	    }
-		*/
+		
 		if(tetrominoDisplay != null) {
 			ArrayList<Tetromino> tempList = new ArrayList<>(tetrominoDisplay);
 			for(Tetromino tetromino: tempList) {
@@ -63,7 +56,6 @@ public class TetrominoQueue extends JComponent{
 		displayTetromino();
 		
 		revalidate();
-
 	}
 	
 	private void displayTetromino() {

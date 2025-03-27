@@ -13,11 +13,6 @@ public class GridBlock {
 	private int width;
 	private boolean blocked = false;
 	
-	/**
-	 * @param x
-	 * @param y
-	 * @param width
-	 */
 	public GridBlock(int x, int y, int width) {
 		this.gridX = x;
 		this.gridY = y;
@@ -25,10 +20,6 @@ public class GridBlock {
 		this.x = gridX*width;
 		this.y = gridY*width;
 	}
-	
-
-	
-
 	
 	public int getX() {
 		return x;

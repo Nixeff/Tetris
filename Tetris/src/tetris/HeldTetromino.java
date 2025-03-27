@@ -20,15 +20,6 @@ public class HeldTetromino extends JComponent{
         this.label.setBounds(50, 0, 100,50);
         this.add(label);
 	}
-
-	public Tetromino getHeldTetromino() {
-		return heldTetromino;
-	}
-
-	public void setHeldTetromino(Tetromino heldTetromino) {
-		this.heldTetromino = heldTetromino;
-		displayTetromino();
-	}
 	
 	private void displayTetromino() {
         for (Block block : heldTetromino.getBodyPieces()) {
@@ -41,7 +32,17 @@ public class HeldTetromino extends JComponent{
     	heldTetromino.moveDown();
     	heldTetromino.moveDown();
 	}
-	
-	
-	
+
+	public Tetromino getHeldTetromino() {
+		return heldTetromino;
+	}
+
+	/**
+	 * Calls displayTetromino automatically 
+	 * @param heldTetromino
+	 */
+	public void setHeldTetromino(Tetromino heldTetromino) {
+		this.heldTetromino = heldTetromino;
+		displayTetromino();
+	}
 }
